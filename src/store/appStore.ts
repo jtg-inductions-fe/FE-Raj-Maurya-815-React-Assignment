@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-export const appStore = configureStore({
-    reducer: {},
-});
+import { githubApi } from '../services/githubApi';
 
-export type RootState = ReturnType<typeof appStore.getState>;
-export type AppDispatch = typeof appStore.dispatch;
-export type AppStore = typeof appStore;
+export const appStore = configureStore({
+    reducer: {
+        [githubApi.reducerPath]: githubApi.reducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(githubApi.middleware),
+});

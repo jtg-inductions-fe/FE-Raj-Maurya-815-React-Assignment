@@ -16,6 +16,7 @@ export const COLORS = {
     COMMON: {
         BLACK: '#000000',
         WHITE: '#ffffff',
+        SLATE: '#E1E4E8',
     },
 };
 
