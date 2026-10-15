@@ -9,7 +9,7 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { theme } from '@theme';
 
 import { router } from './routes/index';
-import { appStore } from './store/appStore';
+import { appStore } from './store/app.store';
 
 const rootElement = document.getElementById('root') as HTMLElement;
 

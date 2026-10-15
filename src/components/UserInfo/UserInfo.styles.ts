@@ -28,8 +28,6 @@ export const ProfileAvatar = styled(Avatar)(({ theme }) => ({
     [theme.breakpoints.down('sm')]: {
         width: '140px',
         height: '140px',
-        // marginLeft: 'auto',
-        // marginRight: 'auto',
     },
 }));
 
@@ -76,6 +74,5 @@ export const InfoLink = styled(Link)({
 });
 
 export const ProfileDetails = styled(Stack)({
-    // backgroundColor: 'red',
     width: '100%',
 });

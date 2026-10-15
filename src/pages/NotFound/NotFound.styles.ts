@@ -1,8 +1,6 @@
-import { Box, styled } from '@mui/material';
+import { Stack, styled } from '@mui/material';
 
-export const NotFoundWrapper = styled(Box)(() => ({
-    display: 'flex',
-    flexDirection: 'column',
+export const NotFoundWrapper = styled(Stack)(() => ({
     justifyContent: 'center',
     gap: '20px',
     alignItems: 'center',
