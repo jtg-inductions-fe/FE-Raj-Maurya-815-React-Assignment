@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useSearchParams } from 'react-router';
 
@@ -9,17 +9,36 @@ import type { HandleSearch } from './UserSearchContainer.types';
 import { SearchBox } from '../../components/SearchBox';
 import { UserInfo } from '../../components/UserInfo';
 import { useGetUserDetailsQuery } from '../../services/githubApi';
+import { useGetSuggestedUserDetailsQuery } from '../../services/githubApi';
 
 export const UserSearchContainer = () => {
     const [searchUsername, setSearchUsername] = useState('');
-
+    const [debouncingName, setDebouncingName] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
-
     const searchQuery = searchParams.get('search');
 
-    useEffect(() => {
-        if (searchQuery) setSearchUsername(searchQuery);
-    }, []);
+    const { data: suggestedData } = useGetSuggestedUserDetailsQuery(
+        debouncingName,
+        {
+            skip: debouncingName === '',
+        },
+    );
+
+    const timeRef = useRef<number | undefined>(undefined);
+
+    const onInputChange = (username: string): void => {
+        if (timeRef.current) {
+            clearTimeout(timeRef.current);
+        }
+
+        if (username == '') {
+            setDebouncingName('');
+            return;
+        }
+        timeRef.current = setTimeout(() => {
+            setDebouncingName(username);
+        }, 500);
+    };
 
     const handleSearch: HandleSearch = (username) => {
         setSearchUsername(username);
@@ -30,10 +49,26 @@ export const UserSearchContainer = () => {
         skip: searchUsername === '',
     });
 
+    let listdata: string[] = [];
+    if (suggestedData) {
+        if (suggestedData.items != null) {
+            listdata = suggestedData.items.map((item) => item.login);
+        }
+    }
+
+    useEffect(() => {
+        if (searchQuery) setSearchUsername(searchQuery);
+    }, []);
+
     return (
         <SearchContainer>
             <MainHeading variant="h1">Find a github user</MainHeading>
-            <SearchBox onSearch={handleSearch} initialValue={searchQuery} />
+            <SearchBox
+                onSearch={handleSearch}
+                initialValue={searchQuery}
+                listdata={listdata}
+                onInputChange={onInputChange}
+            />
             {isLoading && <CircularProgress aria-label="Loading…" />}
             {error && (
                 <Alert severity="error">Username doesn&apos;t exits</Alert>
