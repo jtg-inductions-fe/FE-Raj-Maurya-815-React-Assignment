@@ -1,6 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import type { GithubUser } from '../components/UserInfo';
+import type {
+    GithubSuggestedUserResponse,
+    GithubUser,
+} from '../components/UserInfo';
 
 export const githubApi = createApi({
     reducerPath: 'githubApi',
@@ -9,7 +12,14 @@ export const githubApi = createApi({
         getUserDetails: builder.query<GithubUser, string>({
             query: (username) => `users/${username}`,
         }),
+        getSuggestedUserDetails: builder.query<
+            GithubSuggestedUserResponse,
+            string
+        >({
+            query: (username) => `search/users?q=${username}`,
+        }),
     }),
 });
 
-export const { useGetUserDetailsQuery } = githubApi;
+export const { useGetUserDetailsQuery, useGetSuggestedUserDetailsQuery } =
+    githubApi;

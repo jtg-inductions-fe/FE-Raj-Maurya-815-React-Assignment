@@ -14,3 +14,11 @@ export interface GithubUser {
 export interface UserInfoProps {
     user: GithubUser;
 }
+
+export interface GithubSuggestedUser {
+    login: string;
+}
+
+export interface GithubSuggestedUserResponse {
+    items: GithubSuggestedUser[] | null;
+}
