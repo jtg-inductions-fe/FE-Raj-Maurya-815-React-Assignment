@@ -1,10 +1,10 @@
 import { createBrowserRouter } from 'react-router';
 
-import { UserSearchContainer } from '../containers/UserSearchContainer';
 import { MainLayout } from '../layouts/MainLayout';
 import { Error } from '../pages/Error';
 import { Home } from '../pages/Home';
 import { NotFound } from '../pages/NotFound';
+import { UserSearch } from '../pages/UserSearch';
 
 export const router = createBrowserRouter([
     {
@@ -13,7 +13,7 @@ export const router = createBrowserRouter([
         errorElement: <Error />,
         children: [
             { index: true, element: <Home /> },
-            { path: 'search-user', element: <UserSearchContainer /> },
+            { path: 'search-user', element: <UserSearch /> },
             { path: '*', element: <NotFound /> },
         ],
     },

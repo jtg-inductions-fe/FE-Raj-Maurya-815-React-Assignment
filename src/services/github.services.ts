@@ -5,8 +5,8 @@ import type {
     GithubUser,
 } from '../components/UserInfo';
 
-export const githubApi = createApi({
-    reducerPath: 'githubApi',
+export const github = createApi({
+    reducerPath: 'github',
     baseQuery: fetchBaseQuery({ baseUrl: 'https://api.github.com' }),
     endpoints: (builder) => ({
         getUserDetails: builder.query<GithubUser, string>({
@@ -22,4 +22,4 @@ export const githubApi = createApi({
 });
 
 export const { useGetUserDetailsQuery, useGetSuggestedUserDetailsQuery } =
-    githubApi;
+    github;
