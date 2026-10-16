@@ -1,1 +1,1 @@
-export { UserSearch } from './UserSearch';
+export { UserSearch } from './UserSearch.page';
