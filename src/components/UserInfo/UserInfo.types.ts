@@ -22,3 +22,7 @@ export interface GithubSuggestedUser {
 export interface GithubSuggestedUserResponse {
     items: GithubSuggestedUser[] | null;
 }
+
+export interface AuthenticatedUserResponse {
+    login: string;
+}

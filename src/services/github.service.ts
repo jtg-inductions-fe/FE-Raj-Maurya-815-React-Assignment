@@ -4,8 +4,9 @@ import type {
     GithubSuggestedUserResponse,
     GithubUser,
 } from '../components/UserInfo';
+import { AuthenticatedUserResponse } from '../components/UserInfo/UserInfo.types';
 
-export const githubApi = createApi({
+export const github = createApi({
     reducerPath: 'githubApi',
     baseQuery: fetchBaseQuery({ baseUrl: 'https://api.github.com' }),
     endpoints: (builder) => ({
@@ -18,8 +19,22 @@ export const githubApi = createApi({
         >({
             query: (username) => `search/users?q=${username}`,
         }),
+        authenticateUserDetails: builder.query<
+            AuthenticatedUserResponse,
+            string
+        >({
+            query: (password) => ({
+                url: `/user`,
+                headers: {
+                    Authorization: `Bearer ${password}`,
+                },
+            }),
+        }),
     }),
 });
 
-export const { useGetUserDetailsQuery, useGetSuggestedUserDetailsQuery } =
-    githubApi;
+export const {
+    useGetUserDetailsQuery,
+    useGetSuggestedUserDetailsQuery,
+    useAuthenticateUserDetailsQuery,
+} = github;

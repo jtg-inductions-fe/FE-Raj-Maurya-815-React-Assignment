@@ -8,8 +8,8 @@ import { MainHeading, SearchContainer } from './UserSearchContainer.styles';
 import type { HandleSearch } from './UserSearchContainer.types';
 import { SearchBox } from '../../components/SearchBox';
 import { UserInfo } from '../../components/UserInfo';
-import { useGetUserDetailsQuery } from '../../services/githubApi';
-import { useGetSuggestedUserDetailsQuery } from '../../services/githubApi';
+import { useGetUserDetailsQuery } from '../../services/github.service';
+import { useGetSuggestedUserDetailsQuery } from '../../services/github.service';
 
 export const UserSearchContainer = () => {
     const [searchUsername, setSearchUsername] = useState('');
