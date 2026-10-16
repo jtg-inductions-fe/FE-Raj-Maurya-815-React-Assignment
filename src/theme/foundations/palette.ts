@@ -4,8 +4,18 @@ import { COLORS } from '@constant';
 
 /* Custom Palette */
 export const palette: PaletteOptions = {
-    // TODO: Add necessary colors here
     primary: {
         main: COLORS.PRIMARY.MAIN,
+    },
+    secondary: {
+        main: COLORS.SECONDARY.MAIN,
+    },
+    text: {
+        primary: COLORS.TEXT.PRIMARY,
+        secondary: COLORS.TEXT.SECONDARY,
+    },
+    common: {
+        black: COLORS.COMMON.BLACK,
+        white: COLORS.COMMON.WHITE,
     },
 };
