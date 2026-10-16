@@ -6,6 +6,6 @@ export const ErrorWrapper = styled(Stack)(() => ({
     height: '100vh',
 }));
 
-export const ErrorImage = styled('img')(() => ({
-    width: '400px',
+export const ErrorImage = styled('img')(({ theme }) => ({
+    width: theme.typography.pxToRem(400),
 }));
