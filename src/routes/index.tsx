@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router';
 
-import { Error } from '../pages/Error/Error';
+import { Error } from '../pages/Error/Error.page';
 import { Home } from '../pages/Home';
 import { NotFound } from '../pages/NotFound';
 
