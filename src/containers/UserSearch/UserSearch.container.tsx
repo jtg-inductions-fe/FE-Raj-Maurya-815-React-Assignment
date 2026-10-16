@@ -4,8 +4,8 @@ import { useSearchParams } from 'react-router';
 
 import { Alert, CircularProgress } from '@mui/material';
 
-import { MainHeading, SearchContainer } from './UserSearchContainer.styles';
-import type { HandleSearch } from './UserSearchContainer.types';
+import { MainHeading, SearchContainer } from './UserSearch.styles';
+import type { HandleSearch } from './UserSearch.types';
 import { SearchBox } from '../../components/SearchBox';
 import { UserInfo } from '../../components/UserInfo';
 import { useGetUserDetailsQuery } from '../../services/github.service';

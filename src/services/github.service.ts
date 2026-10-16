@@ -7,7 +7,7 @@ import type {
 import { AuthenticatedUserResponse } from '../components/UserInfo/UserInfo.types';
 
 export const github = createApi({
-    reducerPath: 'githubApi',
+    reducerPath: 'github',
     baseQuery: fetchBaseQuery({ baseUrl: 'https://api.github.com' }),
     endpoints: (builder) => ({
         getUserDetails: builder.query<GithubUser, string>({

@@ -1,14 +1,14 @@
 import { Box, Button, styled } from '@mui/material';
 
-export const SearchBoxWrapper = styled(Box)(() => ({
+export const SearchBoxWrapper = styled(Box)(({ theme }) => ({
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
-    gap: '20px',
+    gap: theme.typography.pxToRem(20),
 }));
 
-export const SubmitButton = styled(Button)(() => ({
+export const SubmitButton = styled(Button)(({ theme }) => ({
     textTransform: 'capitalize',
-    fontSize: '16px',
-    borderRadius: '10px',
+    fontSize: theme.typography.pxToRem(16),
+    borderRadius: theme.typography.pxToRem(10),
 }));
