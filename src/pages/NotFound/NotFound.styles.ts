@@ -1,12 +1,12 @@
 import { Stack, styled } from '@mui/material';
 
-export const NotFoundWrapper = styled(Stack)(() => ({
+export const NotFoundWrapper = styled(Stack)(({ theme }) => ({
     justifyContent: 'center',
-    gap: '20px',
+    gap: theme.typography.pxToRem(20),
     alignItems: 'center',
     height: '100vh',
 }));
 
-export const NotFoundImage = styled('img')(() => ({
-    width: '400px',
+export const NotFoundImage = styled('img')(({ theme }) => ({
+    width: theme.typography.pxToRem(400),
 }));
