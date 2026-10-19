@@ -1,0 +1,74 @@
+import { useForm } from 'react-hook-form';
+
+import { Alert, TextField, Typography } from '@mui/material';
+
+import { ButtonWrapper, LoginWrapper } from './Login.styles';
+import { LoginFormInput, LoginProps } from './Login.types';
+
+export const Login = ({ onSearch, alert }: LoginProps) => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<LoginFormInput>();
+
+    const onSubmit = (data: LoginFormInput) => {
+        onSearch(data.username, data.password);
+    };
+
+    return (
+        <LoginWrapper>
+            <Typography variant="h1">Login</Typography>
+            <Typography variant="h6">
+                Enter your github username as username and personal access token
+                as password
+            </Typography>
+            <TextField
+                id="outlined-basic"
+                label="Username"
+                variant="outlined"
+                required
+                {...register('username', {
+                    required: 'Username is required',
+                    maxLength: {
+                        value: 39,
+                        message: 'Maximum allowed length is 39',
+                    },
+                    pattern: {
+                        value: /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i,
+                        message: 'Invalid username format',
+                    },
+                })}
+                error={!!errors.username}
+                helperText={errors.username?.message}
+            />
+            <TextField
+                id="outlined-basic"
+                label="Password"
+                type="password"
+                variant="outlined"
+                required
+                {...register('password', {
+                    required: 'Password is required',
+                    pattern: {
+                        value: /^(gh[ps]_[a-zA-Z0-9]{36}|github_pat_[a-zA-Z0-9]{22}_[a-zA-Z0-9]{59})$/,
+                        message: 'Invalid password format',
+                    },
+                })}
+                error={!!errors.password}
+                helperText={errors.password?.message}
+            />
+            <ButtonWrapper
+                variant="contained"
+                onClick={(e) => {
+                    void handleSubmit(onSubmit)(e);
+                }}
+            >
+                Submit
+            </ButtonWrapper>
+            {alert && (
+                <Alert severity="error">Incorrect username and password</Alert>
+            )}
+        </LoginWrapper>
+    );
+};

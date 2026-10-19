@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { CircularProgress, Typography } from '@mui/material';
 
-import { ProfileContainerWrapper } from './ProfileContainer.styles';
+import { ProfileContainerWrapper } from './Profile.styles';
 import { GithubUser, UserInfo } from '../../components/UserInfo';
 
 export const ProfileContainer = () => {

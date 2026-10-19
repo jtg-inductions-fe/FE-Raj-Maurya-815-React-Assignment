@@ -4,7 +4,7 @@ import { Outlet, useNavigate } from 'react-router';
 
 import { CircularProgress } from '@mui/material';
 
-export const AuthLayout = () => {
+export const Auth = () => {
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
     const localStorageData = localStorage.getItem('userData');

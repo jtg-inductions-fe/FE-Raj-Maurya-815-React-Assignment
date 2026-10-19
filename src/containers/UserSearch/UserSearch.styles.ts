@@ -2,7 +2,7 @@ import { Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export const SearchContainer = styled(Stack)(({ theme }) => ({
-    justifyContent: 'center',
+    marginTop: theme.typography.pxToRem(100),
     alignItems: 'center',
     gap: theme.typography.pxToRem(20),
 }));

@@ -1,8 +1,7 @@
 import { Stack, styled } from '@mui/material';
 
-export const ProfileContainerWrapper = styled(Stack)({
-    marginTop: '100px',
+export const LoginWrapper = styled(Stack)(() => ({
+    height: '90vh',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: '20px',
-});
+}));
