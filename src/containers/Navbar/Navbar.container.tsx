@@ -54,18 +54,15 @@ export const Navbar = () => {
                             variant="outlined"
                             onClick={() => void navigate('/search-user')}
                         >
-                            {' '}
                             Search User
                         </ButtonWrapper>
                     )}
                     {isLoggedIn && (isHomePage || isSearchUserPage) && (
                         <>
-                            {' '}
                             <ButtonWrapper
                                 variant="outlined"
                                 onClick={() => void navigate('/profile')}
                             >
-                                {' '}
                                 profile
                             </ButtonWrapper>
                             <ButtonWrapper
@@ -78,7 +75,6 @@ export const Navbar = () => {
                     )}
                     {!isLoggedIn && isSearchUserPage && (
                         <>
-                            {' '}
                             <ButtonWrapper
                                 variant="outlined"
                                 onClick={() => void navigate('/login')}
