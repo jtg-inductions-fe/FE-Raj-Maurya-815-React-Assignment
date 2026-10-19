@@ -1,25 +1,28 @@
-import { useEffect, useState } from 'react';
-
-import { Outlet, useNavigate } from 'react-router';
+import { Navigate, Outlet } from 'react-router';
 
 import { CircularProgress } from '@mui/material';
 
-export const Auth = () => {
-    const [isLoading, setIsLoading] = useState(true);
-    const navigate = useNavigate();
-    const localStorageData = localStorage.getItem('userData');
+import { LocalUserData } from '../layouts/Main/Main.types';
+import { useAuthenticateUserDetailsQuery } from '../services/github.service';
 
-    useEffect(() => {
-        if (
-            localStorageData === null ||
-            localStorageData === undefined ||
-            localStorageData === ''
-        )
-            void navigate('/login', { replace: true });
-        else setIsLoading(false);
-    }, [localStorageData, navigate]);
+export const Auth = () => {
+    const userData = localStorage.getItem('userData');
+
+    const token = userData
+        ? (JSON.parse(userData) as LocalUserData).personal_access_token
+        : '';
+
+    const { data, isLoading } = useAuthenticateUserDetailsQuery(token, {
+        skip: token === '',
+    });
+
     if (isLoading) {
         return <CircularProgress aria-label="Loading…" />;
     }
-    return <Outlet />;
+
+    return data && data.login ? (
+        <Outlet />
+    ) : (
+        <Navigate to="/login" replace={true} />
+    );
 };

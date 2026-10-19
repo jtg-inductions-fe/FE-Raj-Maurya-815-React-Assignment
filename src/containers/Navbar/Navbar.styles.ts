@@ -9,4 +9,5 @@ export const NavbarWrapper = styled(AppBar)(({ theme }) => ({
     borderBottom: `${theme.typography.pxToRem(1)} solid`,
     borderColor: COLORS.COMMON.SLATE,
     position: 'sticky',
+    // color: 'black'
 }));
