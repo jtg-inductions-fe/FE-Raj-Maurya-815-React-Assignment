@@ -6,3 +6,4 @@ export type {
     GithubSuggestedUser,
     GithubSuggestedUserResponse,
 } from './UserInfo';
+export { Fallback } from './Fallback';

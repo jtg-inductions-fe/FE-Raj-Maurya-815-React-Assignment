@@ -1,19 +1,9 @@
-import { Box, Stack, Typography, useTheme } from '@mui/material';
+import { Fallback } from '@components';
 
-export const Error = () => {
-    const {
-        typography: { pxToRem },
-    } = useTheme();
-
-    return (
-        <Stack justifyContent="center" alignItems="center" height="100vh">
-            <Box
-                component="img"
-                src="/images/Disclaimer-Symbol.webp"
-                alt="something went wrong"
-                width={pxToRem(400)}
-            />
-            <Typography variant="h4">OOPS! Something Went Wrong</Typography>
-        </Stack>
-    );
-};
+export const Error = () => (
+    <Fallback
+        imgSrc="/images/Disclaimer-Symbol.webp"
+        imgAlt="something went wrong"
+        message="OOPS! Something Went Wrong"
+    />
+);
