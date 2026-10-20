@@ -1,17 +1,18 @@
 import { createBrowserRouter } from 'react-router';
 
-import { Error } from '../pages/Error/Error.page';
-import { Home } from '../pages/Home';
-import { NotFound } from '../pages/NotFound';
+import { ROUTES } from '@constant';
+import { Error } from '@pages';
+import { Home } from '@pages';
+import { NotFound } from '@pages';
 
 export const router = createBrowserRouter([
     {
-        path: '/',
+        path: ROUTES.HOME,
         element: <Home />,
         errorElement: <Error />,
     },
     {
-        path: '*',
+        path: ROUTES.NOT_FOUND,
         element: <NotFound />,
     },
 ]);
