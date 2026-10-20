@@ -1,10 +1,24 @@
-import { Typography } from '@mui/material';
+import { Box, Stack, Typography, useTheme } from '@mui/material';
 
-import { NotFoundImage, NotFoundWrapper } from './NotFound.styles';
+export const NotFound = () => {
+    const {
+        typography: { pxToRem },
+    } = useTheme();
 
-export const NotFound = () => (
-    <NotFoundWrapper>
-        <NotFoundImage src="/images/not-found.webp" alt="404 not found" />
-        <Typography variant="h4">OOPS! Page not found</Typography>
-    </NotFoundWrapper>
-);
+    return (
+        <Stack
+            height="100vh"
+            justifyContent="center"
+            alignItems="center"
+            spacing={pxToRem(20)}
+        >
+            <Box
+                component="img"
+                src="/images/not-found.webp"
+                alt="404 not found"
+                width={pxToRem(400)}
+            />
+            <Typography variant="h4">OOPS! Page not found</Typography>
+        </Stack>
+    );
+};

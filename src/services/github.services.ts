@@ -1,9 +1,5 @@
+import type { GithubSuggestedUserResponse, GithubUser } from '@components';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
-import type {
-    GithubSuggestedUserResponse,
-    GithubUser,
-} from '../components/UserInfo';
 
 export const github = createApi({
     reducerPath: 'github',

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, Stack, TextField, useTheme } from '@mui/material';
 
-import { SearchBoxWrapper, SubmitButton } from './SearchBox.styles';
+import { SubmitButton } from './SearchBox.styles';
 import { SearchBoxProps } from './SearchBox.types';
 
 export const SearchBox = ({
@@ -10,12 +10,13 @@ export const SearchBox = ({
     initialValue,
     listdata,
     onInputChange,
+    searchBoxLabel,
 }: SearchBoxProps) => {
     const [username, setUsername] = useState('');
 
-    useEffect(() => {
-        if (initialValue) setUsername(initialValue);
-    }, []);
+    const {
+        typography: { pxToRem },
+    } = useTheme();
 
     const handleSubmit = () => {
         onSearch(username.trim());
@@ -26,8 +27,12 @@ export const SearchBox = ({
         onInputChange(value);
     };
 
+    useEffect(() => {
+        if (initialValue) setUsername(initialValue);
+    }, []);
+
     return (
-        <SearchBoxWrapper>
+        <Stack direction="row" justifyContent="center" spacing={pxToRem(20)}>
             <Autocomplete
                 freeSolo
                 disablePortal
@@ -39,12 +44,12 @@ export const SearchBox = ({
                     handleUpdate(newInputValue)
                 }
                 renderInput={(params) => (
-                    <TextField {...params} label="Enter github username" />
+                    <TextField {...params} label={searchBoxLabel} />
                 )}
             />
             <SubmitButton variant="contained" onClick={handleSubmit}>
-                Submit
+                submit
             </SubmitButton>
-        </SearchBoxWrapper>
+        </Stack>
     );
 };
