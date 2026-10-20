@@ -6,13 +6,16 @@ export interface GithubUser {
     following: number;
     followers: number;
     bio: string | null;
-    url: string;
+    html_url: string;
     blog: string | null;
     email: string | null;
 }
 
 export interface UserInfoProps {
     user: GithubUser;
+    isLogin?: boolean;
+    isFollowing?: boolean;
+    handleFollow?: () => void;
 }
 
 export interface GithubSuggestedUser {

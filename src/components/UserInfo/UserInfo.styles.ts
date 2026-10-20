@@ -1,5 +1,7 @@
-import { Avatar, Card, Link, Stack, Typography } from '@mui/material';
+import { Avatar, Button, Card, Link, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
+
+import { COLORS } from '@constant';
 
 export const ProfileCard = styled(Card)(({ theme }) => ({
     width: theme.typography.pxToRem(600),
@@ -12,6 +14,7 @@ export const ProfileCard = styled(Card)(({ theme }) => ({
 }));
 
 export const ProfileLayout = styled(Stack)(({ theme }) => ({
+    position: 'relative',
     flexDirection: 'row',
     gap: theme.typography.pxToRem(30),
 
@@ -33,6 +36,8 @@ export const ProfileAvatar = styled(Avatar)(({ theme }) => ({
 
 export const UserHandle = styled(Typography)(({ theme }) => ({
     marginBottom: theme.typography.pxToRem(12),
+    paddingBottom: theme.typography.pxToRem(8),
+    borderBottom: `${theme.typography.pxToRem(1)} solid #e5dfdf`,
 }));
 
 export const UserBio = styled(Typography)(({ theme }) => ({
@@ -76,3 +81,16 @@ export const InfoLink = styled(Link)(({ theme }) => ({
 export const ProfileDetails = styled(Stack)({
     width: '100%',
 });
+
+export const ButtonWrapper = styled(Button)(({ theme }) => ({
+    position: 'absolute',
+    right: theme.typography.pxToRem(10),
+    textTransform: 'capitalize',
+    fontSize: theme.typography.pxToRem(16),
+    borderColor: COLORS.TEXT.PRIMARY,
+    color: COLORS.TEXT.PRIMARY,
+    [theme.breakpoints.down('md')]: {
+        fontSize: theme.typography.pxToRem(14),
+        padding: theme.typography.pxToRem(4),
+    },
+}));
