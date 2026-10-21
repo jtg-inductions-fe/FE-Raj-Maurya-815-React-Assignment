@@ -3,4 +3,4 @@ export {
     useGetUserDetailsQuery,
     useGetSuggestedUserDetailsQuery,
     useAuthenticateUserDetailsQuery,
-} from './github.service';
+} from './github';
