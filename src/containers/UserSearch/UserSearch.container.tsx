@@ -12,6 +12,7 @@ import {
 
 import { UserInfo } from '@components';
 import { SearchBox } from '@components';
+import { UserListItem } from '@components';
 import { useDebounce } from '@hooks';
 import { useGetUserDetailsQuery } from '@services';
 import { useGetSuggestedUserDetailsQuery } from '@services';
@@ -25,7 +26,7 @@ export const UserSearchContainer = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const searchQuery = searchParams.get('search');
 
-    let listdata: string[] = [];
+    let listdata: UserListItem[] = [];
 
     const { data: suggestedData } = useGetSuggestedUserDetailsQuery(
         debouncingName,
@@ -40,7 +41,10 @@ export const UserSearchContainer = () => {
 
     if (suggestedData) {
         if (suggestedData.items != null) {
-            listdata = suggestedData.items.map((item) => item.login);
+            listdata = suggestedData.items.map((item) => ({
+                login: item.login,
+                avatar_url: item.avatar_url,
+            }));
         }
     }
 

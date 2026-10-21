@@ -1,4 +1,5 @@
 export { SearchBox } from './SearchBox';
+export type { UserListItem } from './SearchBox';
 export { UserInfo } from './UserInfo';
 export type {
     GithubUser,
