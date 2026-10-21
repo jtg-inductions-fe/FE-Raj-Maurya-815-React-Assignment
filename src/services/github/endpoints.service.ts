@@ -1,10 +1,9 @@
 import type { GithubSuggestedUserResponse, GithubUser } from '@components';
 import { URLS } from '@constant';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const github = createApi({
-    reducerPath: 'github',
-    baseQuery: fetchBaseQuery({ baseUrl: URLS.GITHUB }),
+import { github } from './base.service';
+
+export const githubExtended = github.injectEndpoints({
     endpoints: (builder) => ({
         getUserDetails: builder.query<GithubUser, string>({
             query: (username) => URLS.USER_DETAILS(username),
@@ -19,4 +18,4 @@ export const github = createApi({
 });
 
 export const { useGetUserDetailsQuery, useGetSuggestedUserDetailsQuery } =
-    github;
+    githubExtended;
