@@ -1,4 +1,4 @@
-export interface AuthenticateUserArg {
+export type AuthenticateUserArg = {
     username: string;
     password: string;
-}
+};

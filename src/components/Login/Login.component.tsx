@@ -1,11 +1,11 @@
 import { useForm } from 'react-hook-form';
 
-import { Alert, TextField, Typography } from '@mui/material';
+import { Alert, TextField, Typography, useTheme } from '@mui/material';
 
 import { ButtonWrapper, LoginWrapper } from './Login.styles';
 import { LoginFormInput, LoginProps } from './Login.types';
 
-export const Login = ({ onSearch, alert }: LoginProps) => {
+export const Login = ({ onSearch, alert, alertMessage }: LoginProps) => {
     const {
         register,
         handleSubmit,
@@ -16,8 +16,18 @@ export const Login = ({ onSearch, alert }: LoginProps) => {
         onSearch(data.username, data.password);
     };
 
+    const {
+        typography: { pxToRem },
+    } = useTheme();
+
     return (
-        <LoginWrapper>
+        <LoginWrapper
+            width={pxToRem(500)}
+            height={pxToRem(500)}
+            padding={pxToRem(60)}
+            spacing={pxToRem(20)}
+            textAlign="center"
+        >
             <Typography variant="h1">Login</Typography>
             <Typography variant="h6">
                 Enter your github username as username and personal access token
@@ -66,9 +76,7 @@ export const Login = ({ onSearch, alert }: LoginProps) => {
             >
                 Submit
             </ButtonWrapper>
-            {alert && (
-                <Alert severity="error">Incorrect username and password</Alert>
-            )}
+            {alert && <Alert severity="error">{alertMessage}</Alert>}
         </LoginWrapper>
     );
 };

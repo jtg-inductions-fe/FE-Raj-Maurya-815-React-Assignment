@@ -1,3 +1,3 @@
-import { UserSearchContainer } from '../../containers/UserSearch';
+import { UserSearchContainer } from '@containers';
 
 export const UserSearch = () => <UserSearchContainer />;

@@ -1,4 +1,4 @@
-export interface GithubUser {
+export type GithubUser = {
     avatar_url: string;
     login: string;
     name: string | null;
@@ -9,19 +9,21 @@ export interface GithubUser {
     html_url: string;
     blog: string | null;
     email: string | null;
-}
+};
 
-export interface UserInfoProps {
+export type UserInfoProps = {
     user: GithubUser;
     isLogin?: boolean;
     isFollowing?: boolean;
     handleFollow?: () => void;
-}
+};
 
-export interface GithubSuggestedUser {
+export type GithubSuggestedUser = {
     login: string;
-}
+    avatar_url: string;
+    name: string | null;
+};
 
-export interface GithubSuggestedUserResponse {
+export type GithubSuggestedUserResponse = {
     items: GithubSuggestedUser[] | null;
-}
+};

@@ -1,19 +1,10 @@
-import { CardContent, Typography } from '@mui/material';
+import { CardContent, Stack, Typography, useTheme } from '@mui/material';
 
 import {
     ButtonWrapper,
-    InfoField,
-    InfoLabel,
     InfoLink,
-    InfoList,
-    InfoValue,
     ProfileAvatar,
     ProfileCard,
-    ProfileDetails,
-    ProfileLayout,
-    Stats,
-    StatsItem,
-    UserBio,
     UserHandle,
 } from './UserInfo.styles';
 import { UserInfoProps } from './UserInfo.types';
@@ -27,70 +18,123 @@ export const UserInfo = ({
     const handleClick = () => {
         if (handleFollow) handleFollow();
     };
+    const {
+        typography: { pxToRem },
+    } = useTheme();
 
     return (
         <ProfileCard>
             <CardContent>
-                <ProfileLayout>
+                <Stack
+                    position="relative"
+                    direction={{ xs: 'column', sm: 'row' }}
+                    spacing={pxToRem(30)}
+                >
                     <ProfileAvatar src={user.avatar_url} alt="avatar" />
-                    <ProfileDetails>
+                    <Stack width="100%">
                         <Typography variant="h2">
                             {user.name || user.login}
                         </Typography>
 
                         <UserHandle variant="body1">@{user.login}</UserHandle>
 
-                        {user.bio && <UserBio variant="h6">{user.bio}</UserBio>}
+                        {user.bio && (
+                            <Typography variant="h6" sx={{ mb: pxToRem(16) }}>
+                                {user.bio}
+                            </Typography>
+                        )}
 
-                        <Stats>
-                            <StatsItem>
-                                Followers{' '}
-                                <Typography variant="h4">
-                                    {user.followers}
-                                </Typography>
-                            </StatsItem>
-                            <StatsItem>
-                                Following{' '}
-                                <Typography variant="h4">
-                                    {user.following}
-                                </Typography>
-                            </StatsItem>
-                        </Stats>
+                        <Stack
+                            direction="row"
+                            spacing={pxToRem(32)}
+                            sx={{ mb: pxToRem(20) }}
+                        >
+                            {user.followers !== undefined &&
+                                user.followers !== null && (
+                                    <Stack alignItems="center">
+                                        Followers{' '}
+                                        <Typography variant="h4">
+                                            {user.followers}
+                                        </Typography>
+                                    </Stack>
+                                )}
+                            {user.following !== undefined &&
+                                user.following !== null && (
+                                    <Stack alignItems="center">
+                                        Following{' '}
+                                        <Typography variant="h4">
+                                            {user.following}
+                                        </Typography>
+                                    </Stack>
+                                )}
+                        </Stack>
 
-                        <InfoList>
+                        <Stack spacing={pxToRem(8)}>
                             {user.location && (
-                                <InfoField>
-                                    <InfoLabel>Location-</InfoLabel>
-                                    <InfoValue>{user.location}</InfoValue>
-                                </InfoField>
+                                <Stack
+                                    direction="row"
+                                    alignItems="baseline"
+                                    spacing={pxToRem(8)}
+                                    sx={{ flexWrap: 'wrap' }}
+                                >
+                                    <Typography sx={{ width: pxToRem(80) }}>
+                                        Location-
+                                    </Typography>
+                                    <Typography sx={{ wordBreak: 'break-all' }}>
+                                        {user.location}
+                                    </Typography>
+                                </Stack>
                             )}
 
                             {user.email && (
-                                <InfoField>
-                                    <InfoLabel>Email-</InfoLabel>
-                                    <InfoValue>{user.email}</InfoValue>
-                                </InfoField>
+                                <Stack
+                                    direction="row"
+                                    alignItems="baseline"
+                                    spacing={pxToRem(8)}
+                                    sx={{ flexWrap: 'wrap' }}
+                                >
+                                    <Typography sx={{ width: pxToRem(80) }}>
+                                        Email-
+                                    </Typography>
+                                    <Typography sx={{ wordBreak: 'break-all' }}>
+                                        {user.email}
+                                    </Typography>
+                                </Stack>
                             )}
 
                             {user.blog && (
-                                <InfoField>
-                                    <InfoLabel>Blog-</InfoLabel>
+                                <Stack
+                                    direction="row"
+                                    alignItems="baseline"
+                                    spacing={pxToRem(8)}
+                                    sx={{ flexWrap: 'wrap' }}
+                                >
+                                    <Typography sx={{ width: pxToRem(80) }}>
+                                        Blog-
+                                    </Typography>
                                     <InfoLink href={user.blog} variant="h6">
                                         {user.blog}
                                     </InfoLink>
-                                </InfoField>
+                                </Stack>
                             )}
 
                             {user.html_url && (
-                                <InfoField>
-                                    <InfoLabel>GitHub-</InfoLabel>
+                                <Stack
+                                    direction="row"
+                                    alignItems="baseline"
+                                    spacing={pxToRem(8)}
+                                    sx={{ flexWrap: 'wrap' }}
+                                >
+                                    <Typography sx={{ width: pxToRem(80) }}>
+                                        GitHub-
+                                    </Typography>
                                     <InfoLink href={user.html_url} variant="h6">
                                         {user.html_url}
                                     </InfoLink>
-                                </InfoField>
+                                </Stack>
                             )}
-                        </InfoList>
-                    </ProfileDetails>
+                        </Stack>
+                    </Stack>
                     {isLogin && (
                         <ButtonWrapper
                             variant="outlined"
@@ -100,7 +144,7 @@ export const UserInfo = ({
                             {isFollowing ? 'following' : 'follow'}
                         </ButtonWrapper>
                     )}
-                </ProfileLayout>
+                </Stack>
             </CardContent>
         </ProfileCard>
     );

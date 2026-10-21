@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router';
 
-import { LoginWrapper } from './Login.styles';
+import { Stack, useTheme } from '@mui/material';
+
+import { Login } from '@components';
+import { useAuthenticateUserDetailsQuery } from '@services';
+
 import { AuthenticateUserArg } from './Login.types';
-import { Login } from '../../components/Login';
-import { useAuthenticateUserDetailsQuery } from '../../services/github.service';
 
 export const LoginContainer = () => {
     const navigate = useNavigate();
@@ -21,6 +23,10 @@ export const LoginContainer = () => {
     const handleSearch = (username: string, password: string) => {
         setLoginDetail({ username: username, password: password });
     };
+
+    const {
+        typography: { pxToRem },
+    } = useTheme();
 
     useEffect(() => {
         if (data?.login) {
@@ -38,8 +44,17 @@ export const LoginContainer = () => {
     }, [data, loginDetail]);
 
     return (
-        <LoginWrapper>
-            <Login onSearch={handleSearch} alert={alert} />
-        </LoginWrapper>
+        <Stack
+            marginTop={pxToRem(250)}
+            justifyContent="center"
+            alignItems="center"
+            height="100%"
+        >
+            <Login
+                onSearch={handleSearch}
+                alert={alert}
+                alertMessage="Incorrect username and password"
+            />
+        </Stack>
     );
 };

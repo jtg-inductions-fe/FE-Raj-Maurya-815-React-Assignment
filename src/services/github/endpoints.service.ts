@@ -1,41 +1,38 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import type { GithubSuggestedUserResponse, GithubUser } from '@components';
+import { URLS } from '@constant';
 
-import type {
-    GithubSuggestedUserResponse,
-    GithubUser,
-} from '../components/UserInfo';
+import { github } from './base.service';
 
-export const github = createApi({
-    reducerPath: 'github',
-    baseQuery: fetchBaseQuery({ baseUrl: 'https://api.github.com' }),
+export const githubExtended = github.injectEndpoints({
     endpoints: (builder) => ({
         getUserDetails: builder.query<GithubUser, string>({
-            query: (username) => `users/${username}`,
+            query: (username) => URLS.USER_DETAILS(username),
         }),
+
         getSuggestedUserDetails: builder.query<
             GithubSuggestedUserResponse,
             string
         >({
-            query: (username) => `search/users?q=${username}`,
+            query: (username) => URLS.SUGGESTED_USERS(username),
         }),
+
         authenticateUserDetails: builder.query<GithubUser, string>({
             query: (password) => ({
-                url: `/user`,
+                url: URLS.USER,
                 headers: {
                     Authorization: `Bearer ${password}`,
                 },
             }),
         }),
+
         checkUserFollowing: builder.query<
             boolean,
             { target_username: string; token: string }
         >({
             query: ({ target_username, token }) => ({
-                url: `/user/following/${target_username}`,
+                url: URLS.USER_FOLLOWING(target_username),
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    Accept: 'application/vnd.github+json',
-                    'X-GitHub-Api-Version': '2026-03-10',
                 },
                 responseHandler: (response) => response.text(),
                 validateStatus: (response) =>
@@ -43,17 +40,16 @@ export const github = createApi({
             }),
             transformResponse: (_, meta) => meta?.response?.status === 204,
         }),
+
         followUser: builder.mutation<
             boolean,
             { username: string; target_username: string; token: string }
         >({
             query: ({ target_username, token }) => ({
-                url: `/user/following/${target_username}`,
+                url: URLS.USER_FOLLOWING(target_username),
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    Accept: 'application/vnd.github+json',
-                    'X-GitHub-Api-Version': '2026-03-10',
                 },
                 responseHandler: (response) => response.text(),
             }),
@@ -70,7 +66,7 @@ export const github = createApi({
                 { dispatch, queryFulfilled },
             ) {
                 const updateUserDetail = dispatch(
-                    github.util.updateQueryData(
+                    githubExtended.util.updateQueryData(
                         'getUserDetails',
                         target_username,
                         (draft) => {
@@ -79,7 +75,7 @@ export const github = createApi({
                     ),
                 );
                 const updateCheckUserFollowing = dispatch(
-                    github.util.updateQueryData(
+                    githubExtended.util.updateQueryData(
                         'checkUserFollowing',
                         { target_username, token },
                         () => true,
@@ -102,4 +98,4 @@ export const {
     useAuthenticateUserDetailsQuery,
     useCheckUserFollowingQuery,
     useFollowUserMutation,
-} = github;
+} = githubExtended;

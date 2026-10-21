@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-
-import { github } from '../services/github.service';
+import { github } from '@services';
 
 export const appStore = configureStore({
     reducer: {

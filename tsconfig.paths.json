@@ -3,7 +3,15 @@
         "paths": {
             "@assets/*": ["./src/assets/*"],
             "@constant": ["./src/constant/index"],
-            "@theme": ["./src/theme/index"]
+            "@theme": ["./src/theme/index"],
+            "@components": ["./src/components/index"],
+            "@containers": ["./src/containers/index"],
+            "@layouts": ["./src/layouts/index"],
+            "@pages": ["./src/pages/index"],
+            "@routes": ["./src/routes/index"],
+            "@services": ["./src/services/index"],
+            "@store": ["./src/store/index"],
+            "@hooks": ["./src/hooks/index"]
         }
     }
 }
