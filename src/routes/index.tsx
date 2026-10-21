@@ -1,9 +1,7 @@
 import { createBrowserRouter } from 'react-router';
 
 import { ROUTES } from '@constant';
-import { Error } from '@pages';
-import { Home } from '@pages';
-import { NotFound } from '@pages';
+import { Error, Home, NotFound } from '@pages';
 
 export const router = createBrowserRouter([
     {
