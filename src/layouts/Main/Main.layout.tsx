@@ -1,35 +1,34 @@
 import { Outlet } from 'react-router';
 
-import { CircularProgress } from '@mui/material';
+import { Box, CircularProgress, Stack, useTheme } from '@mui/material';
 
-import { CircularProgressWrapper, MainLayoutWrapper } from './Main.styles';
-import { LocalUserData } from './Main.types';
-import { Navbar } from '../../containers/Navbar';
-import { useAuthenticateUserDetailsQuery } from '../../services/github.service';
+import { Navbar } from '@containers';
+import { useAuth } from '@hooks';
 
 export const MainLayout = () => {
-    const userData = localStorage.getItem('userData');
+    const {
+        palette: { background },
+    } = useTheme();
 
-    const token = userData
-        ? (JSON.parse(userData) as LocalUserData).personal_access_token
-        : '';
-
-    const { isLoading } = useAuthenticateUserDetailsQuery(token, {
-        skip: token === '',
-    });
+    const { isLoading } = useAuth();
 
     if (isLoading)
         return (
-            <CircularProgressWrapper>
+            <Stack
+                height="100vh"
+                width="100vw"
+                justifyContent="center"
+                alignItems="center"
+            >
                 <CircularProgress aria-label="Loading…" />;
-            </CircularProgressWrapper>
+            </Stack>
         );
     return (
-        <MainLayoutWrapper>
+        <Stack bgcolor={background.default}>
             <Navbar />
-            <main>
+            <Box component="main">
                 <Outlet />
-            </main>
-        </MainLayoutWrapper>
+            </Box>
+        </Stack>
     );
 };

@@ -1,3 +1,3 @@
-import { LoginContainer } from '../../containers/Login';
+import { LoginContainer } from '@containers';
 
 export const Login = () => <LoginContainer />;

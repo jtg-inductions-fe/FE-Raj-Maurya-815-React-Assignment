@@ -1,5 +1,5 @@
-import { NavbarWrapper } from './Navbar.styles';
+import { NavHeader } from './Navbar.styles';
 
 export const Navbar = () => (
-    <NavbarWrapper position="sticky">Github Finder</NavbarWrapper>
+    <NavHeader color="transparent" elevation={0} position="sticky"></NavHeader>
 );
