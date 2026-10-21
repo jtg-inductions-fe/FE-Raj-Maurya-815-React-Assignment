@@ -17,6 +17,8 @@ export type UserInfoProps = {
 
 export type GithubSuggestedUser = {
     login: string;
+    avatar_url: string;
+    name: string | null;
 };
 
 export type GithubSuggestedUserResponse = {

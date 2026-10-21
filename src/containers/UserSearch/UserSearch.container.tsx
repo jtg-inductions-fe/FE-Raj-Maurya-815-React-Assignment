@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useSearchParams } from 'react-router';
 
@@ -12,6 +12,7 @@ import {
 
 import { UserInfo } from '@components';
 import { SearchBox } from '@components';
+import { useDebounce } from '@hooks';
 import { useGetUserDetailsQuery } from '@services';
 import { useGetSuggestedUserDetailsQuery } from '@services';
 
@@ -19,11 +20,10 @@ import type { HandleSearch } from './UserSearch.types';
 
 export const UserSearchContainer = () => {
     const [searchUsername, setSearchUsername] = useState('');
-    const [debouncingName, setDebouncingName] = useState('');
+    const [inputValue, setInputValue] = useState('');
+    const debouncingName = useDebounce(inputValue, 500);
     const [searchParams, setSearchParams] = useSearchParams();
-
     const searchQuery = searchParams.get('search');
-    const timeRef = useRef<number | undefined>(undefined);
 
     let listdata: string[] = [];
 
@@ -45,17 +45,7 @@ export const UserSearchContainer = () => {
     }
 
     const onInputChange = (username: string): void => {
-        if (timeRef.current) {
-            clearTimeout(timeRef.current);
-        }
-
-        if (username == '') {
-            setDebouncingName('');
-            return;
-        }
-        timeRef.current = setTimeout(() => {
-            setDebouncingName(username);
-        }, 500);
+        setInputValue(username);
     };
 
     const handleSearch: HandleSearch = (username) => {

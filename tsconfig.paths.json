@@ -10,7 +10,8 @@
             "@pages": ["./src/pages/index"],
             "@routes": ["./src/routes/index"],
             "@services": ["./src/services/index"],
-            "@store": ["./src/store/index"]
+            "@store": ["./src/store/index"],
+            "@hooks": ["./src/hooks/index"]
         }
     }
 }
