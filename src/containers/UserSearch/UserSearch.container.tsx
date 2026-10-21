@@ -1,21 +1,32 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useSearchParams } from 'react-router';
 
-import { Alert, CircularProgress } from '@mui/material';
+import {
+    Alert,
+    CircularProgress,
+    Stack,
+    Typography,
+    useTheme,
+} from '@mui/material';
 
-import { MainHeading, SearchContainer } from './UserSearch.styles';
+import { SearchBox, UserInfo, UserListItem } from '@components';
+import { useDebounce } from '@hooks';
+import {
+    useGetSuggestedUserDetailsQuery,
+    useGetUserDetailsQuery,
+} from '@services';
+
 import type { HandleSearch } from './UserSearch.types';
-import { SearchBox } from '../../components/SearchBox';
-import { UserInfo } from '../../components/UserInfo';
-import { useGetUserDetailsQuery } from '../../services/github.service';
-import { useGetSuggestedUserDetailsQuery } from '../../services/github.service';
 
 export const UserSearchContainer = () => {
     const [searchUsername, setSearchUsername] = useState('');
-    const [debouncingName, setDebouncingName] = useState('');
+    const [inputValue, setInputValue] = useState('');
+    const debouncingName = useDebounce(inputValue, 500);
     const [searchParams, setSearchParams] = useSearchParams();
     const searchQuery = searchParams.get('search');
+
+    let listdata: UserListItem[] = [];
 
     const { data: suggestedData } = useGetSuggestedUserDetailsQuery(
         debouncingName,
@@ -24,20 +35,21 @@ export const UserSearchContainer = () => {
         },
     );
 
-    const timeRef = useRef<number | undefined>(undefined);
+    const { data, error, isLoading } = useGetUserDetailsQuery(searchUsername, {
+        skip: searchUsername === '',
+    });
+
+    if (suggestedData) {
+        if (suggestedData.items != null) {
+            listdata = suggestedData.items.map((item: UserListItem) => ({
+                login: item.login,
+                avatar_url: item.avatar_url,
+            }));
+        }
+    }
 
     const onInputChange = (username: string): void => {
-        if (timeRef.current) {
-            clearTimeout(timeRef.current);
-        }
-
-        if (username == '') {
-            setDebouncingName('');
-            return;
-        }
-        timeRef.current = setTimeout(() => {
-            setDebouncingName(username);
-        }, 500);
+        setInputValue(username);
     };
 
     const handleSearch: HandleSearch = (username) => {
@@ -45,35 +57,36 @@ export const UserSearchContainer = () => {
         setSearchParams({ search: username });
     };
 
-    const { data, error, isLoading } = useGetUserDetailsQuery(searchUsername, {
-        skip: searchUsername === '',
-    });
-
-    let listdata: string[] = [];
-    if (suggestedData) {
-        if (suggestedData.items != null) {
-            listdata = suggestedData.items.map((item) => item.login);
-        }
-    }
-
     useEffect(() => {
         if (searchQuery) setSearchUsername(searchQuery);
     }, []);
 
+    const {
+        typography: { pxToRem },
+    } = useTheme();
+
     return (
-        <SearchContainer>
-            <MainHeading variant="h1">Find a github user</MainHeading>
+        <Stack
+            justifyContent="center"
+            alignItems="center"
+            spacing={pxToRem(20)}
+            marginTop={pxToRem(100)}
+        >
+            <Typography variant="h1" sx={{ pb: pxToRem(20) }}>
+                Find a github user
+            </Typography>
             <SearchBox
                 onSearch={handleSearch}
                 initialValue={searchQuery}
                 listdata={listdata}
                 onInputChange={onInputChange}
+                searchBoxLabel={'Enter github username'}
             />
             {isLoading && <CircularProgress aria-label="Loading…" />}
             {error && (
                 <Alert severity="error">Username doesn&apos;t exits</Alert>
             )}
             {data && !error && <UserInfo user={data} />}
-        </SearchContainer>
+        </Stack>
     );
 };

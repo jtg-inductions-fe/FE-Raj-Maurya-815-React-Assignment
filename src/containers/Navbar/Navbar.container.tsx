@@ -1,37 +1,25 @@
 import { useLocation, useNavigate } from 'react-router';
 
-import { Typography } from '@mui/material';
+import { Stack, Toolbar, Typography, useTheme } from '@mui/material';
 
-import {
-    ActionWrapper,
-    BrandLogoWrapper,
-    BrandWrapper,
-    ButtonWrapper,
-    NavbarWrapper,
-    ToolbarWrapper,
-} from './Navbar.styles';
-import { LocalUserData } from '../../layouts/Main/Main.types';
-import {
-    github,
-    useAuthenticateUserDetailsQuery,
-} from '../../services/github.service';
-import { appStore } from '../../store/app.store';
+import { useAuth } from '@hooks';
+import { github } from '@services';
+import { appStore } from '@store';
+
+import { NavHeader } from './Navbar.styles';
+import { BrandLogoWrapper, ButtonWrapper } from './Navbar.styles';
 
 export const Navbar = () => {
     const navigate = useNavigate();
-    const userData = localStorage.getItem('userData');
     const location = useLocation();
-    const token = userData
-        ? (JSON.parse(userData) as LocalUserData).personal_access_token
-        : '';
 
-    const { data } = useAuthenticateUserDetailsQuery(token, {
-        skip: token === '',
-    });
+    const { isAuthenticated } = useAuth();
 
-    const isLoggedIn = !!data?.login;
+    const {
+        typography: { pxToRem },
+    } = useTheme();
+
     const isHomePage = location.pathname === '/';
-    const isSearchUserPage = location.pathname === '/search-user';
     const isProfilePage = location.pathname === '/profile';
 
     const logoutHandler = () => {
@@ -41,23 +29,26 @@ export const Navbar = () => {
     };
 
     return (
-        <NavbarWrapper position="sticky">
-            <ToolbarWrapper>
-                <BrandWrapper>
+        <NavHeader color="transparent" elevation={0} position="sticky">
+            <Toolbar sx={{ justifyContent: 'space-between' }}>
+                <Stack flexDirection="row" gap={pxToRem(10)}>
                     <BrandLogoWrapper src="/images/brand-logo.webp" />
                     <Typography variant="h4">Github Finder</Typography>
-                </BrandWrapper>
+                </Stack>
 
-                <ActionWrapper>
-                    {!isSearchUserPage && (
+                <Stack
+                    flexDirection="row"
+                    sx={{ gap: { xs: pxToRem(4), md: pxToRem(10) } }}
+                >
+                    {!isHomePage && (
                         <ButtonWrapper
                             variant="outlined"
-                            onClick={() => void navigate('/search-user')}
+                            onClick={() => void navigate('/')}
                         >
                             Search User
                         </ButtonWrapper>
                     )}
-                    {isLoggedIn && (isHomePage || isSearchUserPage) && (
+                    {isAuthenticated && isHomePage && (
                         <>
                             <ButtonWrapper
                                 variant="outlined"
@@ -73,7 +64,7 @@ export const Navbar = () => {
                             </ButtonWrapper>
                         </>
                     )}
-                    {!isLoggedIn && isSearchUserPage && (
+                    {!isAuthenticated && isHomePage && (
                         <>
                             <ButtonWrapper
                                 variant="outlined"
@@ -92,8 +83,8 @@ export const Navbar = () => {
                             logout
                         </ButtonWrapper>
                     )}
-                </ActionWrapper>
-            </ToolbarWrapper>
-        </NavbarWrapper>
+                </Stack>
+            </Toolbar>
+        </NavHeader>
     );
 };
