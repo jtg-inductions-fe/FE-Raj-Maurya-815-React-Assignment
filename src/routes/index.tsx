@@ -4,6 +4,10 @@ import { ROUTES } from '@constant';
 import { MainLayout } from '@layouts';
 import { Error, NotFound, UserSearch } from '@pages';
 
+/**
+ * Application router configuration.
+ *
+ */
 export const router = createBrowserRouter([
     {
         path: ROUTES.HOME,
