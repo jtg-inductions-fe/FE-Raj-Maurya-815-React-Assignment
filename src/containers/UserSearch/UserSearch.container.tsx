@@ -19,12 +19,19 @@ import { useGetSuggestedUserDetailsQuery } from '@services';
 
 import type { HandleSearch } from './UserSearch.types';
 
+/**
+ * Container component that manages GitHub user search state, debounced suggestions,
+ */
 export const UserSearchContainer = () => {
     const [searchUsername, setSearchUsername] = useState('');
     const [inputValue, setInputValue] = useState('');
     const debouncingName = useDebounce(inputValue, 500);
     const [searchParams, setSearchParams] = useSearchParams();
     const searchQuery = searchParams.get('search');
+
+    const {
+        typography: { pxToRem },
+    } = useTheme();
 
     let listdata: UserListItem[] = [];
 
@@ -61,10 +68,6 @@ export const UserSearchContainer = () => {
         if (searchQuery) setSearchUsername(searchQuery);
     }, []);
 
-    const {
-        typography: { pxToRem },
-    } = useTheme();
-
     return (
         <Stack
             justifyContent="center"
@@ -83,7 +86,7 @@ export const UserSearchContainer = () => {
             />
             {isLoading && <CircularProgress aria-label="Loading…" />}
             {error && (
-                <Alert severity="error">Username doesn&apos;t exits</Alert>
+                <Alert severity="error">Username doesn&apos;t exists</Alert>
             )}
             {data && !error && <UserInfo user={data} />}
         </Stack>

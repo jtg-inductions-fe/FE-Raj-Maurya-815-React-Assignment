@@ -1,5 +1,8 @@
 import { Box, useTheme } from '@mui/material';
 
+/**
+ * Dummy navbar with some basic styling.
+ */
 export const Navbar = () => {
     const {
         palette: { divider, background },
