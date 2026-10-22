@@ -5,9 +5,8 @@ import { useNavigate } from 'react-router';
 import { Stack, useTheme } from '@mui/material';
 
 import { Login } from '@components';
-import { useAuthenticateUserDetailsQuery } from '@services';
-
-import { AuthenticateUserArg } from './Login.types';
+import { LoginFormInput } from '@components';
+import { useLazyAuthenticateUserDetailsQuery } from '@services';
 
 /**
  * Container that handles user login logic.
@@ -16,7 +15,7 @@ import { AuthenticateUserArg } from './Login.types';
  */
 export const LoginContainer = () => {
     const navigate = useNavigate();
-    const [loginDetail, setLoginDetail] = useState<AuthenticateUserArg>({
+    const [loginDetail, setLoginDetail] = useState<LoginFormInput>({
         username: '',
         password: '',
     });
@@ -26,11 +25,14 @@ export const LoginContainer = () => {
         typography: { pxToRem },
     } = useTheme();
 
-    const { data } = useAuthenticateUserDetailsQuery(loginDetail.password, {
-        skip: loginDetail.username === '' || loginDetail.password === '',
-    });
+    /**
+     * Query to call github api, when submit button is clicked.
+     */
+
+    const [authenticateUser, { data }] = useLazyAuthenticateUserDetailsQuery();
 
     const handleSearch = (username: string, password: string) => {
+        void authenticateUser(password);
         setLoginDetail({ username: username, password: password });
     };
 
@@ -41,13 +43,14 @@ export const LoginContainer = () => {
                     ...data,
                     personal_access_token: loginDetail.password,
                 };
+
                 localStorage.setItem('userData', JSON.stringify(updatedData));
                 void navigate('/profile');
             } else {
                 setAlert(true);
             }
         }
-    }, [data, loginDetail]);
+    }, [data, loginDetail, navigate]);
 
     return (
         <Stack

@@ -1,7 +1,8 @@
 export {
     github,
-    useGetUserDetailsQuery,
+    useLazyGetUserDetailsQuery,
     useGetSuggestedUserDetailsQuery,
+    useLazyAuthenticateUserDetailsQuery,
     useAuthenticateUserDetailsQuery,
     useCheckUserFollowingQuery,
     useFollowUserMutation,

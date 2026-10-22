@@ -27,10 +27,16 @@ export const SearchBox = ({
         typography: { pxToRem },
     } = useTheme();
 
+    /**
+     * Trims and submit current search input.
+     */
     const handleSubmit = () => {
         onSearch(username.trim());
     };
 
+    /**
+     * Update username and triggers parent input-change callback.
+     */
     const handleUpdate = (value: string) => {
         setUsername(value);
         onInputChange(value);

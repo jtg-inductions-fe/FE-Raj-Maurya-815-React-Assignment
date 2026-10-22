@@ -1,2 +1,2 @@
 export { UserSearchContainer } from './UserSearch.container';
-export type { HandleSearch } from './UserSearch.types';
+export type { OnSearch } from './UserSearch.types';

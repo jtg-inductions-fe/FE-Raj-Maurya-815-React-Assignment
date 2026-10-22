@@ -27,6 +27,9 @@ export const Navbar = () => {
     const isHomePage = location.pathname === '/';
     const isProfilePage = location.pathname === '/profile';
 
+    /**
+     * Remove data from local storage and clear store, then navigate user to login page.
+     */
     const logoutHandler = () => {
         localStorage.removeItem('userData');
         appStore.dispatch(github.util.resetApiState());

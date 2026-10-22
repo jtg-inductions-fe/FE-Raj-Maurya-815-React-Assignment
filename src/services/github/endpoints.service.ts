@@ -6,12 +6,18 @@ import { github } from './base.service';
 /**
  * Extends the base GitHub service by adding endpoints.
  */
-export const githubExtended = github.injectEndpoints({
+export const userApi = github.injectEndpoints({
     endpoints: (builder) => ({
+        /**
+         * Fetches profile details for a user.
+         */
         getUserDetails: builder.query<GithubUser, string>({
             query: (username) => URLS.USER_DETAILS(username),
         }),
 
+        /**
+         * Fetches matching user profiles for search suggestions.
+         */
         getSuggestedUserDetails: builder.query<
             GithubSuggestedUserResponse,
             string
@@ -19,6 +25,9 @@ export const githubExtended = github.injectEndpoints({
             query: (username) => URLS.SUGGESTED_USERS(username),
         }),
 
+        /**
+         * Fetch user detail using personal access token.
+         */
         authenticateUserDetails: builder.query<GithubUser, string>({
             query: (password) => ({
                 url: URLS.USER,
@@ -69,7 +78,7 @@ export const githubExtended = github.injectEndpoints({
                 { dispatch, queryFulfilled },
             ) {
                 const updateUserDetail = dispatch(
-                    githubExtended.util.updateQueryData(
+                    userApi.util.updateQueryData(
                         'getUserDetails',
                         target_username,
                         (draft) => {
@@ -78,7 +87,7 @@ export const githubExtended = github.injectEndpoints({
                     ),
                 );
                 const updateCheckUserFollowing = dispatch(
-                    githubExtended.util.updateQueryData(
+                    userApi.util.updateQueryData(
                         'checkUserFollowing',
                         { target_username, token },
                         () => true,
@@ -96,9 +105,10 @@ export const githubExtended = github.injectEndpoints({
 });
 
 export const {
-    useGetUserDetailsQuery,
-    useGetSuggestedUserDetailsQuery,
+    useLazyGetUserDetailsQuery,
+    useLazyAuthenticateUserDetailsQuery,
     useAuthenticateUserDetailsQuery,
+    useGetSuggestedUserDetailsQuery,
     useCheckUserFollowingQuery,
     useFollowUserMutation,
-} = githubExtended;
+} = userApi;

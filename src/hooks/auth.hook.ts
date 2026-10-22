@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
+
 import type { LocalUserData } from '@layouts';
-import { useAuthenticateUserDetailsQuery } from '@services';
+import { useLazyAuthenticateUserDetailsQuery } from '@services';
 
 /**
  * Custom hook that grabs the user's token from local storage, validates it
@@ -12,15 +14,18 @@ export const useAuth = () => {
         ? (JSON.parse(userData) as LocalUserData).personal_access_token
         : '';
 
-    const { data, isLoading } = useAuthenticateUserDetailsQuery(token, {
-        skip: token === '',
-    });
+    const [authenticateUser, { data, isLoading, isUninitialized }] =
+        useLazyAuthenticateUserDetailsQuery();
+
+    useEffect(() => {
+        void authenticateUser(token);
+    }, [token]);
 
     const isAuthenticated = !!(data && data.login);
 
     return {
         isAuthenticated,
-        isLoading,
+        isLoading: isLoading || (!!token && isUninitialized),
         user: data || null,
     };
 };

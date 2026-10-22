@@ -1,8 +1,9 @@
 export { github } from './base.service';
 
 export {
-    useGetUserDetailsQuery,
+    useLazyGetUserDetailsQuery,
     useGetSuggestedUserDetailsQuery,
+    useLazyAuthenticateUserDetailsQuery,
     useAuthenticateUserDetailsQuery,
     useCheckUserFollowingQuery,
     useFollowUserMutation,
