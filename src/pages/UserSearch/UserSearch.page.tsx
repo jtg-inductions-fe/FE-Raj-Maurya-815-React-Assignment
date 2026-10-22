@@ -5,7 +5,7 @@ import { Alert } from '@mui/material';
 import { UserSearchContainer } from '@containers';
 
 /**
- * user-search page with its container wrapped in error boundary.
+ * User-search page with its container wrapped in error boundary.
  */
 export const UserSearch = () => (
     <ErrorBoundary

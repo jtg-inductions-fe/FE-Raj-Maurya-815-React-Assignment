@@ -1,1 +1,4 @@
-export type HandleSearch = (username: string) => void;
+/**
+ * Type for handle search representing a function.
+ */
+export type OnSearch = (username: string) => void;
