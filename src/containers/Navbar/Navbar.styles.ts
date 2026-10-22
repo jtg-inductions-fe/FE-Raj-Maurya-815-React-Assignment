@@ -11,7 +11,6 @@ export const NavHeader = styled(AppBar)(
         },
     }) => ({
         height: pxToRem(65),
-        gap: pxToRem(20),
         backgroundColor: background.paper,
         boxShadow: 'none',
         paddingLeft: pxToRem(50),
@@ -43,6 +42,12 @@ export const ButtonWrapper = styled(Button)(
     }),
 );
 
-export const BrandLogoWrapper = styled('img')(({ theme }) => ({
-    height: theme.typography.pxToRem(30),
-}));
+export const BrandLogoWrapper = styled('img')(
+    ({
+        theme: {
+            typography: { pxToRem },
+        },
+    }) => ({
+        height: pxToRem(30),
+    }),
+);

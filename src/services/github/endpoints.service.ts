@@ -3,6 +3,9 @@ import { URLS } from '@constant';
 
 import { github } from './base.service';
 
+/**
+ * Extends the base GitHub service by adding endpoints.
+ */
 export const githubExtended = github.injectEndpoints({
     endpoints: (builder) => ({
         getUserDetails: builder.query<GithubUser, string>({

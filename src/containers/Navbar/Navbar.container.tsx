@@ -9,6 +9,11 @@ import { appStore } from '@store';
 import { NavHeader } from './Navbar.styles';
 import { BrandLogoWrapper, ButtonWrapper } from './Navbar.styles';
 
+/**
+ * Navigation bar- it displays the brand logo and
+ * dynamically switches navigation buttons (Search, Profile, Login, Logout)
+ * depending on what page the user is viewing and whether the user is authenticated or not.
+ */
 export const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation();

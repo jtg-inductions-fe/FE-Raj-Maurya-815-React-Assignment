@@ -9,19 +9,21 @@ import {
 } from './UserInfo.styles';
 import { UserInfoProps } from './UserInfo.types';
 
+/**
+ * UI card component that displays GitHub profile information for a user and has follow button.
+ */
 export const UserInfo = ({
     user,
     handleFollow,
     isFollowing = true,
     isLogin = false,
 }: UserInfoProps) => {
-    const handleClick = () => {
-        if (handleFollow) handleFollow();
-    };
     const {
         typography: { pxToRem },
     } = useTheme();
-
+    const handleClick = () => {
+        if (handleFollow) handleFollow();
+    };
     return (
         <ProfileCard>
             <CardContent>

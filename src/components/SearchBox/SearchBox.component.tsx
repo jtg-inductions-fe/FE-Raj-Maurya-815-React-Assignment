@@ -11,6 +11,9 @@ import {
 import { SubmitButton } from './SearchBox.styles';
 import { SearchBoxProps } from './SearchBox.types';
 
+/**
+ * UI component with seach field, autocomplete and a submit button.
+ */
 export const SearchBox = ({
     onSearch,
     initialValue,

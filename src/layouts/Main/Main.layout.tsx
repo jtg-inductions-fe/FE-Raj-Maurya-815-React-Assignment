@@ -5,6 +5,10 @@ import { Box, CircularProgress, Stack, useTheme } from '@mui/material';
 import { Navbar } from '@containers';
 import { useAuth } from '@hooks';
 
+/**
+ * Standard page layout of the application.
+ * It puts the navigation bar at the top and display the main page content below it.
+ */
 export const MainLayout = () => {
     const {
         palette: { background },
