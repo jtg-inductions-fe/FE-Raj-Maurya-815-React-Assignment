@@ -42,6 +42,12 @@ export const ButtonWrapper = styled(Button)(
     }),
 );
 
-export const BrandLogoWrapper = styled('img')(({ theme }) => ({
-    height: theme.typography.pxToRem(30),
-}));
+export const BrandLogoWrapper = styled('img')(
+    ({
+        theme: {
+            typography: { pxToRem },
+        },
+    }) => ({
+        height: pxToRem(30),
+    }),
+);
