@@ -1,6 +1,10 @@
 import type { LocalUserData } from '@layouts';
 import { useAuthenticateUserDetailsQuery } from '@services';
 
+/**
+ * Custom hook that grabs the user's token from local storage, validates it
+ * using the GitHub API, and returns their login status, loading state, and profile data.
+ */
 export const useAuth = () => {
     const userData = localStorage.getItem('userData');
 

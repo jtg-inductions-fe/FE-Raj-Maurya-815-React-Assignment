@@ -5,6 +5,10 @@ import { Alert, TextField, Typography, useTheme } from '@mui/material';
 import { ButtonWrapper, LoginWrapper } from './Login.styles';
 import { LoginFormInput, LoginProps } from './Login.types';
 
+/**
+ * A login card that collects a user's GitHub-username as username and personal-access-token as password.
+ * Validates the input formats, and displays error messages.
+ */
 export const Login = ({ onSearch, alert, alertMessage }: LoginProps) => {
     const {
         register,
@@ -12,13 +16,13 @@ export const Login = ({ onSearch, alert, alertMessage }: LoginProps) => {
         formState: { errors },
     } = useForm<LoginFormInput>();
 
-    const onSubmit = (data: LoginFormInput) => {
-        onSearch(data.username, data.password);
-    };
-
     const {
         typography: { pxToRem },
     } = useTheme();
+
+    const onSubmit = (data: LoginFormInput) => {
+        onSearch(data.username, data.password);
+    };
 
     return (
         <LoginWrapper

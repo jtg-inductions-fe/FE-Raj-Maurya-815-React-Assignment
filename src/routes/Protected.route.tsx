@@ -5,6 +5,11 @@ import { CircularProgress, Stack } from '@mui/material';
 import { ROUTES } from '@constant';
 import { useAuth } from '@hooks';
 
+/**
+ * A security wrapper that checks if a user is logged in.
+ * It displays a loader while checking, allow if authenticated, and redirect
+ * user back to the login page if not authenticated.
+ */
 export const Protected = () => {
     const { isAuthenticated, isLoading } = useAuth();
 

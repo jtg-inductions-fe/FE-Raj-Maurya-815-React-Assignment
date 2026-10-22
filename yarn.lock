@@ -4036,19 +4036,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^7.90.0":
-  version: 7.90.0
-  resolution: "react-hook-form@npm:7.90.0"
-  peerDependencies:
-    "@types/react": "*"
-    react: ^16.8.0 || ^17 || ^18 || ^19
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  checksum: 10c0/4278859ea6d1ed9288eade929255a21129a726e097121a9b6b290fc33e296d539e3cb290e3d07de37f3f5cc9b84722c1acf23d8657570729a6264230318b792a
-  languageName: node
-  linkType: hard
-
 "react-error-boundary@npm:^6.1.6":
   version: 6.1.6
   resolution: "react-error-boundary@npm:6.1.6"
@@ -4059,6 +4046,19 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 10c0/b9a8c3cd8e004c33cd892b16b4dcc947ff86657a4b6133219dfa4448183ae59d14341a5fc37632646b3e53bc53131a8fd6f86df7d91b80bbf674611c0201e410
+  languageName: node
+  linkType: hard
+
+"react-hook-form@npm:^7.90.0":
+  version: 7.90.0
+  resolution: "react-hook-form@npm:7.90.0"
+  peerDependencies:
+    "@types/react": "*"
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 10c0/4278859ea6d1ed9288eade929255a21129a726e097121a9b6b290fc33e296d539e3cb290e3d07de37f3f5cc9b84722c1acf23d8657570729a6264230318b792a
   languageName: node
   linkType: hard
 
@@ -4103,6 +4103,8 @@ __metadata:
     prettier: "npm:3.4.2"
     react: "npm:19.0.0"
     react-dom: "npm:19.0.0"
+    react-error-boundary: "npm:^6.1.6"
+    react-hook-form: "npm:^7.90.0"
     react-redux: "npm:^9.3.0"
     react-router: "npm:^8.4.0"
     sharp: "npm:0.33.5"

@@ -8,7 +8,6 @@ export const NavHeader = styled(AppBar)(
         },
     }) => ({
         height: pxToRem(65),
-        gap: pxToRem(20),
         backgroundColor: background.paper,
         boxShadow: 'none',
         borderBottom: `${pxToRem(1)} solid`,
