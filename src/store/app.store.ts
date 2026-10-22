@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { github } from '@services';
 
 /**
  * Global redux application store.
  */
 export const appStore = configureStore({
-    reducer: {},
+    reducer: {
+        [github.reducerPath]: github.reducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(github.middleware),
 });
-
-export type RootState = ReturnType<typeof appStore.getState>;
-export type AppDispatch = typeof appStore.dispatch;
-export type AppStore = typeof appStore;

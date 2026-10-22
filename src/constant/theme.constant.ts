@@ -16,6 +16,8 @@ export const COLORS = {
     COMMON: {
         BLACK: '#000000',
         WHITE: '#ffffff',
+        SLATE: '#E1E4E8',
+        OFFWHITE: 'oklch(98.4% 0.003 247.858)',
     },
 };
 
