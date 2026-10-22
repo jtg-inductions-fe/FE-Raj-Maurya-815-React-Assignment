@@ -8,10 +8,14 @@ import {
 } from './UserInfo.styles';
 import { UserInfoProps } from './UserInfo.types';
 
+/**
+ * UI card component that displays GitHub profile information for a user.
+ */
 export const UserInfo = ({ user }: UserInfoProps) => {
     const {
         typography: { pxToRem },
     } = useTheme();
+
     return (
         <ProfileCard>
             <CardContent>

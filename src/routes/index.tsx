@@ -6,6 +6,10 @@ import { Error, Login, NotFound, ProfilePage, UserSearch } from '@pages';
 
 import { Protected } from './Protected.route';
 
+/**
+ * Application router configuration.
+ *
+ */
 export const router = createBrowserRouter([
     {
         path: ROUTES.HOME,
