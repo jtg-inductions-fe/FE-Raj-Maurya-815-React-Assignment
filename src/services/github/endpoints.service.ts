@@ -24,6 +24,10 @@ export const userApi = github.injectEndpoints({
         >({
             query: (username) => URLS.SUGGESTED_USERS(username),
         }),
+
+        /**
+         * Fetch user detail using personal access token.
+         */
         authenticateUserDetails: builder.query<GithubUser, string>({
             query: (password) => ({
                 url: URLS.USER,
@@ -36,8 +40,7 @@ export const userApi = github.injectEndpoints({
 });
 
 export const {
-    useGetUserDetailsQuery,
     useLazyGetUserDetailsQuery,
-    useAuthenticateUserDetailsQuery,
+    useLazyAuthenticateUserDetailsQuery,
     useGetSuggestedUserDetailsQuery,
 } = userApi;

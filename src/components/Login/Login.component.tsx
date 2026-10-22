@@ -20,6 +20,9 @@ export const Login = ({ onSearch, alert, alertMessage }: LoginProps) => {
         typography: { pxToRem },
     } = useTheme();
 
+    /**
+     * call parent search function on submitting.
+     */
     const onSubmit = (data: LoginFormInput) => {
         onSearch(data.username, data.password);
     };
