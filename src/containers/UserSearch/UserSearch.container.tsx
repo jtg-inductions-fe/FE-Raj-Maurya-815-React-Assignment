@@ -12,10 +12,9 @@ import {
 
 import type { UserListItem } from '@components';
 import { SearchBox, UserInfo } from '@components';
-import { useDebounce } from '@hooks';
+import { useAuth, useDebounce } from '@hooks';
 import { LocalUserData } from '@layouts';
 import {
-    useAuthenticateUserDetailsQuery,
     useCheckUserFollowingQuery,
     useFollowUserMutation,
     useGetSuggestedUserDetailsQuery,
@@ -73,16 +72,13 @@ export const UserSearchContainer = () => {
         void fetchUserDetails(username);
         setSearchParams({ search: username });
     };
+
+    const { isAuthenticated: isLogin, user: loginUserData } = useAuth();
+
     const userData = localStorage.getItem('userData');
     const token = userData
         ? (JSON.parse(userData) as LocalUserData).personal_access_token
         : '';
-
-    const { data: loginUserData } = useAuthenticateUserDetailsQuery(token, {
-        skip: token === '',
-    });
-
-    const isLogin = !!loginUserData?.login;
 
     const { data: followingData, isLoading: isFollowingLoading } =
         useCheckUserFollowingQuery(
@@ -91,9 +87,11 @@ export const UserSearchContainer = () => {
                 skip: !isLogin || !searhedUserData?.login,
             },
         );
-
     const isFollowing = isFollowingLoading ? true : followingData === true;
 
+    /**
+     * Trigger follow mutation which will call follow user api.
+     */
     const handleFollow = () => {
         if (!token || !searhedUserData?.login || !loginUserData?.login) return;
         void followUser({

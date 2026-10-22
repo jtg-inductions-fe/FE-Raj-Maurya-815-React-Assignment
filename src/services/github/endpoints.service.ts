@@ -37,6 +37,9 @@ export const userApi = github.injectEndpoints({
             }),
         }),
 
+        /**
+         * Checks whether authenticated user follow a target user or not.
+         */
         checkUserFollowing: builder.query<
             boolean,
             { target_username: string; token: string }
@@ -53,6 +56,9 @@ export const userApi = github.injectEndpoints({
             transformResponse: (_, meta) => meta?.response?.status === 204,
         }),
 
+        /**
+         * Authenticated user follows a target user.
+         */
         followUser: builder.mutation<
             boolean,
             { username: string; target_username: string; token: string }
