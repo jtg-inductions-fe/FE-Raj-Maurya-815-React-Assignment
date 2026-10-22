@@ -1,6 +1,6 @@
 export {
     github,
-    useGetUserDetailsQuery,
+    useLazyGetUserDetailsQuery,
     useGetSuggestedUserDetailsQuery,
-    useAuthenticateUserDetailsQuery,
+    useLazyAuthenticateUserDetailsQuery,
 } from './github';

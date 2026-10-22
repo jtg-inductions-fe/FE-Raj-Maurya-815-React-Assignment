@@ -10,20 +10,20 @@ import {
     useTheme,
 } from '@mui/material';
 
-import { SearchBox, UserInfo, UserListItem } from '@components';
+import type { UserListItem } from '@components';
+import { SearchBox, UserInfo } from '@components';
 import { useDebounce } from '@hooks';
 import {
     useGetSuggestedUserDetailsQuery,
-    useGetUserDetailsQuery,
+    useLazyGetUserDetailsQuery,
 } from '@services';
 
-import type { HandleSearch } from './UserSearch.types';
+import type { OnSearch } from './UserSearch.types';
 
 /**
- * Container component that manages GitHub user search state, debounced suggestions,
+ * Container that manages GitHub user search state, debounced suggestions.
  */
 export const UserSearchContainer = () => {
-    const [searchUsername, setSearchUsername] = useState('');
     const [inputValue, setInputValue] = useState('');
     const debouncingName = useDebounce(inputValue, 500);
     const [searchParams, setSearchParams] = useSearchParams();
@@ -42,9 +42,8 @@ export const UserSearchContainer = () => {
         },
     );
 
-    const { data, error, isLoading } = useGetUserDetailsQuery(searchUsername, {
-        skip: searchUsername === '',
-    });
+    const [fetchUserDetails, { data, error, isLoading }] =
+        useLazyGetUserDetailsQuery();
 
     if (suggestedData) {
         if (suggestedData.items != null) {
@@ -55,17 +54,25 @@ export const UserSearchContainer = () => {
         }
     }
 
+    /**
+     * Updates input value to trigger the suggestion debounce.
+     */
     const onInputChange = (username: string): void => {
         setInputValue(username);
     };
 
-    const handleSearch: HandleSearch = (username) => {
-        setSearchUsername(username);
+    /**
+     * Updates search username and  the URL search query parameters.
+     */
+    const onSearch: OnSearch = (username) => {
+        void fetchUserDetails(username);
         setSearchParams({ search: username });
     };
 
     useEffect(() => {
-        if (searchQuery) setSearchUsername(searchQuery);
+        if (searchQuery) {
+            void fetchUserDetails(searchQuery);
+        }
     }, []);
 
     return (
@@ -79,7 +86,7 @@ export const UserSearchContainer = () => {
                 Find a github user
             </Typography>
             <SearchBox
-                onSearch={handleSearch}
+                onSearch={onSearch}
                 initialValue={searchQuery}
                 listdata={listdata}
                 onInputChange={onInputChange}

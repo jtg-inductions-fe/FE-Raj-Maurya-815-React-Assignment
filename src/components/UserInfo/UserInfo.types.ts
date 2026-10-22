@@ -1,3 +1,6 @@
+/**
+ *  Type of github user details.
+ */
 export type GithubUser = {
     avatar_url: string;
     login: string;
@@ -11,16 +14,25 @@ export type GithubUser = {
     email: string | null;
 };
 
+/**
+ * Type used in props of userinfo component.
+ */
 export type UserInfoProps = {
     user: GithubUser;
 };
 
+/**
+ * Type used in dropdown suggestion in search box.
+ */
 export type GithubSuggestedUser = {
     login: string;
     avatar_url: string;
     name: string | null;
 };
 
+/**
+ * Type used for reponse of github api.
+ */
 export type GithubSuggestedUserResponse = {
     items: GithubSuggestedUser[] | null;
 };

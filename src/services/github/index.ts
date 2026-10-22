@@ -1,7 +1,7 @@
 export { github } from './base.service';
 
 export {
-    useGetUserDetailsQuery,
+    useLazyGetUserDetailsQuery,
     useGetSuggestedUserDetailsQuery,
-    useAuthenticateUserDetailsQuery,
+    useLazyAuthenticateUserDetailsQuery,
 } from './endpoints.service';
