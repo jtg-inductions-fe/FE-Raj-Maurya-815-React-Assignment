@@ -6,11 +6,18 @@ import { github } from './base.service';
 /**
  * Extends the base GitHub service by adding endpoints.
  */
-export const githubExtended = github.injectEndpoints({
+export const userApi = github.injectEndpoints({
     endpoints: (builder) => ({
+        /**
+         * Fetches profile details for a user.
+         */
         getUserDetails: builder.query<GithubUser, string>({
             query: (username) => URLS.USER_DETAILS(username),
         }),
+
+        /**
+         * Fetches matching user profiles for search suggestions.
+         */
         getSuggestedUserDetails: builder.query<
             GithubSuggestedUserResponse,
             string
@@ -20,5 +27,8 @@ export const githubExtended = github.injectEndpoints({
     }),
 });
 
-export const { useGetUserDetailsQuery, useGetSuggestedUserDetailsQuery } =
-    githubExtended;
+export const {
+    useGetUserDetailsQuery,
+    useLazyGetUserDetailsQuery,
+    useGetSuggestedUserDetailsQuery,
+} = userApi;

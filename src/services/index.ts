@@ -1,5 +1,5 @@
 export {
     github,
-    useGetUserDetailsQuery,
+    useLazyGetUserDetailsQuery,
     useGetSuggestedUserDetailsQuery,
 } from './github';
