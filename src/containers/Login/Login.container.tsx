@@ -9,6 +9,11 @@ import { useAuthenticateUserDetailsQuery } from '@services';
 
 import { AuthenticateUserArg } from './Login.types';
 
+/**
+ * Container that handles user login logic.
+ * It validates credentials and saves the user info along with token to local storage, and
+ * redirects the user to profile page after successful login.
+ */
 export const LoginContainer = () => {
     const navigate = useNavigate();
     const [loginDetail, setLoginDetail] = useState<AuthenticateUserArg>({
@@ -16,6 +21,11 @@ export const LoginContainer = () => {
         password: '',
     });
     const [alert, setAlert] = useState<boolean>(false);
+
+    const {
+        typography: { pxToRem },
+    } = useTheme();
+
     const { data } = useAuthenticateUserDetailsQuery(loginDetail.password, {
         skip: loginDetail.username === '' || loginDetail.password === '',
     });
@@ -23,10 +33,6 @@ export const LoginContainer = () => {
     const handleSearch = (username: string, password: string) => {
         setLoginDetail({ username: username, password: password });
     };
-
-    const {
-        typography: { pxToRem },
-    } = useTheme();
 
     useEffect(() => {
         if (data?.login) {

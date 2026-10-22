@@ -1,3 +1,6 @@
+/**
+ * Routes used in the application.
+ */
 export const ROUTES = {
     HOME: '/',
     LOGIN: 'login',
