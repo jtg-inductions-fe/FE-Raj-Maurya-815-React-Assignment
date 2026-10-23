@@ -61,7 +61,7 @@ export const StyledUserHandle = styled(Typography)(({ theme }) => {
     };
 });
 
-export const ButtonWrapper = styled(Button)(({ theme }) => {
+export const StyledButton = styled(Button)(({ theme }) => {
     const {
         typography: { pxToRem },
         breakpoints: { down },

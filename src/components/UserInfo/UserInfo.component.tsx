@@ -1,7 +1,7 @@
 import { CardContent, Stack, Typography, useTheme } from '@mui/material';
 
 import {
-    ButtonWrapper,
+    StyledButton,
     StyledInfoLink,
     StyledProfileAvatar,
     StyledProfileCard,
@@ -22,9 +22,13 @@ export const UserInfo = ({
     const {
         typography: { pxToRem },
     } = useTheme();
+
+    //Event handlers
+    // call follow user api.
     const handleClick = () => {
         if (handleFollow) handleFollow();
     };
+
     return (
         <StyledProfileCard>
             <CardContent>
@@ -147,13 +151,13 @@ export const UserInfo = ({
                         </Stack>
                     </Stack>
                     {isLogin && (
-                        <ButtonWrapper
+                        <StyledButton
                             variant="outlined"
                             onClick={handleClick}
                             disabled={isFollowing}
                         >
                             {isFollowing ? 'following' : 'follow'}
-                        </ButtonWrapper>
+                        </StyledButton>
                     )}
                 </Stack>
             </CardContent>

@@ -31,38 +31,27 @@ export const userApi = github.injectEndpoints({
             }),
         }),
 
-        /**
-         * Checks whether authenticated user follow a target user or not.
-         */
-        checkUserFollowing: builder.query<
-            boolean,
-            { target_username: string; token: string }
-        >({
-            query: ({ target_username, token }) => ({
-                url: URLS.USER_FOLLOWING(target_username),
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-                responseHandler: (response) => response.text(),
-                validateStatus: (response) =>
-                    response.status === 204 || response.status === 404,
-            }),
-            transformResponse: (_, meta) => meta?.response?.status === 204,
-        }),
+        // Checks whether authenticated user follow a target user or not.
+        checkUserFollowing: builder.query<boolean, { target_username: string }>(
+            {
+                query: ({ target_username }) => ({
+                    url: URLS.USER_FOLLOWING(target_username),
+                    responseHandler: (response) => response.text(),
+                    validateStatus: (response) =>
+                        response.status === 204 || response.status === 404,
+                }),
+                transformResponse: (_, meta) => meta?.response?.status === 204,
+            },
+        ),
 
-        /**
-         * Authenticated user follows a target user.
-         */
+        // Authenticated user follows a target user.
         followUser: builder.mutation<
             boolean,
-            { username: string; target_username: string; token: string }
+            { username: string; target_username: string }
         >({
-            query: ({ target_username, token }) => ({
+            query: ({ target_username }) => ({
                 url: URLS.USER_FOLLOWING(target_username),
                 method: 'PUT',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
                 responseHandler: (response) => response.text(),
             }),
             transformResponse: (_, meta) => meta?.response?.status === 204,
@@ -74,7 +63,7 @@ export const userApi = github.injectEndpoints({
             },
 
             async onQueryStarted(
-                { target_username, token },
+                { target_username },
                 { dispatch, queryFulfilled },
             ) {
                 const updateUserDetail = dispatch(
@@ -89,7 +78,7 @@ export const userApi = github.injectEndpoints({
                 const updateCheckUserFollowing = dispatch(
                     userApi.util.updateQueryData(
                         'checkUserFollowing',
-                        { target_username, token },
+                        { target_username },
                         () => true,
                     ),
                 );

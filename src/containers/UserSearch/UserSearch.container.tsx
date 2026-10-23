@@ -13,7 +13,6 @@ import {
 import type { UserListItem } from '@components';
 import { SearchBox, UserInfo } from '@components';
 import { useAuth, useDebounce } from '@hooks';
-import { LocalUserData } from '@layouts';
 import {
     useCheckUserFollowingQuery,
     useFollowUserMutation,
@@ -35,6 +34,7 @@ export const UserSearchContainer = () => {
         typography: { pxToRem },
     } = useTheme();
     const [followUser] = useFollowUserMutation();
+    const { isAuthenticated: isLogin, user: loginUserData } = useAuth();
 
     //Constants
     const searchQuery = searchParams.get('search');
@@ -53,6 +53,15 @@ export const UserSearchContainer = () => {
     //Fetch user details when fetchUserDetails is called.
     const [fetchUserDetails, { data: searhedUserData, error, isLoading }] =
         useLazyGetUserDetailsQuery();
+    // checks whether target user is followed or not.
+    const { data: followingData, isLoading: isFollowingLoading } =
+        useCheckUserFollowingQuery(
+            { target_username: searhedUserData?.login || '' },
+            {
+                skip: !isLogin || !searhedUserData?.login,
+            },
+        );
+    const isFollowing = isFollowingLoading ? true : followingData === true;
 
     if (suggestedData) {
         if (suggestedData.items != null) {
@@ -73,34 +82,16 @@ export const UserSearchContainer = () => {
         void fetchUserDetails(username);
         setSearchParams({ search: username });
     };
-
-    const { isAuthenticated: isLogin, user: loginUserData } = useAuth();
-
-    const userData = localStorage.getItem('userData');
-    const token = userData
-        ? (JSON.parse(userData) as LocalUserData).personal_access_token
-        : '';
-
-    const { data: followingData, isLoading: isFollowingLoading } =
-        useCheckUserFollowingQuery(
-            { target_username: searhedUserData?.login || '', token },
-            {
-                skip: !isLogin || !searhedUserData?.login,
-            },
-        );
-    const isFollowing = isFollowingLoading ? true : followingData === true;
-
-    /**
-     * Trigger follow mutation which will call follow user api.
-     */
+    // Trigger follow mutation which will call follow user api.
     const handleFollow = () => {
-        if (!token || !searhedUserData?.login || !loginUserData?.login) return;
+        if (!searhedUserData?.login || !loginUserData?.login) return;
         void followUser({
             username: loginUserData.login,
             target_username: searhedUserData.login,
-            token,
         });
     };
+
+    //useeffects
     useEffect(() => {
         if (searchQuery) {
             void fetchUserDetails(searchQuery);
