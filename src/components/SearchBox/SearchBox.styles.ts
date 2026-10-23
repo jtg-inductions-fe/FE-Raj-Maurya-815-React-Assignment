@@ -1,6 +1,6 @@
 import { Button, styled } from '@mui/material';
 
-export const SubmitButton = styled(Button)(({ theme }) => {
+export const StyledSubmitButton = styled(Button)(({ theme }) => {
     const {
         typography: { pxToRem },
     } = theme;

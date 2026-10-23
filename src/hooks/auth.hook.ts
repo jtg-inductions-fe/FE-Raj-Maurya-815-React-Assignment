@@ -8,20 +8,21 @@ import { useLazyAuthenticateUserDetailsQuery } from '@services';
  * using the GitHub API, and returns their login status, loading state, and profile data.
  */
 export const useAuth = () => {
+    //Constants
     const userData = localStorage.getItem('userData');
-
     const token = userData
         ? (JSON.parse(userData) as LocalUserData).personal_access_token
         : '';
 
+    //Queries
     const [authenticateUser, { data, isLoading, isUninitialized }] =
         useLazyAuthenticateUserDetailsQuery();
+    const isAuthenticated = !!(data && data.login);
 
+    //Useeffects
     useEffect(() => {
         void authenticateUser(token);
     }, [token]);
-
-    const isAuthenticated = !!(data && data.login);
 
     return {
         isAuthenticated,
