@@ -7,6 +7,4 @@ export type {
     GithubSuggestedUser,
     GithubSuggestedUserResponse,
 } from './UserInfo';
-export { Login } from './Login';
-export type { LoginFormInput } from './Login';
 export { Fallback } from './Fallback';

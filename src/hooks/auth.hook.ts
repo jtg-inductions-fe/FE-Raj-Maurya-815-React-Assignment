@@ -21,7 +21,9 @@ export const useAuth = () => {
 
     //Useeffects
     useEffect(() => {
-        void authenticateUser(token);
+        if (token) {
+            void authenticateUser(token);
+        }
     }, [token]);
 
     return {
