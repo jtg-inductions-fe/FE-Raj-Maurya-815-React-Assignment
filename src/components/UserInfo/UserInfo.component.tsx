@@ -2,10 +2,10 @@ import { CardContent, Stack, Typography, useTheme } from '@mui/material';
 
 import {
     ButtonWrapper,
-    InfoLink,
-    ProfileAvatar,
-    ProfileCard,
-    UserHandle,
+    StyledInfoLink,
+    StyledProfileAvatar,
+    StyledProfileCard,
+    StyledUserHandle,
 } from './UserInfo.styles';
 import { UserInfoProps } from './UserInfo.types';
 
@@ -18,6 +18,7 @@ export const UserInfo = ({
     isFollowing = true,
     isLogin = false,
 }: UserInfoProps) => {
+    //Hooks
     const {
         typography: { pxToRem },
     } = useTheme();
@@ -25,20 +26,22 @@ export const UserInfo = ({
         if (handleFollow) handleFollow();
     };
     return (
-        <ProfileCard>
+        <StyledProfileCard>
             <CardContent>
                 <Stack
                     position="relative"
                     direction={{ xs: 'column', sm: 'row' }}
                     spacing={pxToRem(30)}
                 >
-                    <ProfileAvatar src={user.avatar_url} alt="avatar" />
+                    <StyledProfileAvatar src={user.avatar_url} alt="avatar" />
                     <Stack width="100%">
                         <Typography variant="h2">
                             {user.name || user.login}
                         </Typography>
 
-                        <UserHandle variant="body1">@{user.login}</UserHandle>
+                        <StyledUserHandle variant="body1">
+                            @{user.login}
+                        </StyledUserHandle>
 
                         {user.bio && (
                             <Typography variant="h6" sx={{ mb: pxToRem(16) }}>
@@ -114,9 +117,12 @@ export const UserInfo = ({
                                     <Typography sx={{ width: pxToRem(80) }}>
                                         Blog-
                                     </Typography>
-                                    <InfoLink href={user.blog} variant="h6">
+                                    <StyledInfoLink
+                                        href={user.blog}
+                                        variant="h6"
+                                    >
                                         {user.blog}
-                                    </InfoLink>
+                                    </StyledInfoLink>
                                 </Stack>
                             )}
 
@@ -130,9 +136,12 @@ export const UserInfo = ({
                                     <Typography sx={{ width: pxToRem(80) }}>
                                         GitHub-
                                     </Typography>
-                                    <InfoLink href={user.html_url} variant="h6">
+                                    <StyledInfoLink
+                                        href={user.html_url}
+                                        variant="h6"
+                                    >
                                         {user.html_url}
-                                    </InfoLink>
+                                    </StyledInfoLink>
                                 </Stack>
                             )}
                         </Stack>
@@ -148,6 +157,6 @@ export const UserInfo = ({
                     )}
                 </Stack>
             </CardContent>
-        </ProfileCard>
+        </StyledProfileCard>
     );
 };

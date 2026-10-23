@@ -1,7 +1,7 @@
 import { Avatar, Button, Card, Link, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-export const ProfileCard = styled(Card)(({ theme }) => {
+export const StyledProfileCard = styled(Card)(({ theme }) => {
     const {
         typography: { pxToRem },
         breakpoints: { down },
@@ -18,7 +18,7 @@ export const ProfileCard = styled(Card)(({ theme }) => {
     };
 });
 
-export const ProfileAvatar = styled(Avatar)(({ theme }) => {
+export const StyledProfileAvatar = styled(Avatar)(({ theme }) => {
     const {
         typography: { pxToRem },
         breakpoints: { down },
@@ -37,7 +37,7 @@ export const ProfileAvatar = styled(Avatar)(({ theme }) => {
     };
 });
 
-export const InfoLink = styled(Link)(({ theme }) => {
+export const StyledInfoLink = styled(Link)(({ theme }) => {
     const {
         typography: { pxToRem },
     } = theme;
@@ -48,7 +48,7 @@ export const InfoLink = styled(Link)(({ theme }) => {
     };
 });
 
-export const UserHandle = styled(Typography)(({ theme }) => {
+export const StyledUserHandle = styled(Typography)(({ theme }) => {
     const {
         typography: { pxToRem },
         palette: { divider },

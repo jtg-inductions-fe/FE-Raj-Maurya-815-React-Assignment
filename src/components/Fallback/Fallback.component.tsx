@@ -7,6 +7,7 @@ import { FallbackProps } from './Fallback.types';
  * Centers a fallback image and headline.
  */
 export const Fallback = ({ imgSrc, imgAlt, message }: FallbackProps) => {
+    //Hooks
     const {
         typography: { pxToRem },
     } = useTheme();

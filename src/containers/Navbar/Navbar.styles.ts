@@ -1,8 +1,6 @@
 import { AppBar, Button, styled } from '@mui/material';
 
-import { COLORS } from '@constant';
-
-export const NavHeader = styled(AppBar)(({ theme }) => {
+export const StyledNavbar = styled(AppBar)(({ theme }) => {
     const {
         typography: { pxToRem },
         palette: { background, divider },
@@ -24,17 +22,18 @@ export const NavHeader = styled(AppBar)(({ theme }) => {
     };
 });
 
-export const ButtonWrapper = styled(Button)(({ theme }) => {
+export const StyledButton = styled(Button)(({ theme }) => {
     const {
         typography: { pxToRem },
         breakpoints: { down },
+        palette: { text },
     } = theme;
 
     return {
         textTransform: 'capitalize',
         fontSize: pxToRem(16),
-        borderColor: COLORS.TEXT.PRIMARY,
-        color: COLORS.TEXT.PRIMARY,
+        borderColor: text.primary,
+        color: text.primary,
         [down('md')]: {
             fontSize: pxToRem(14),
             padding: pxToRem(4),
@@ -42,7 +41,7 @@ export const ButtonWrapper = styled(Button)(({ theme }) => {
     };
 });
 
-export const BrandLogoWrapper = styled('img')(({ theme }) => {
+export const StyledBrandLogo = styled('img')(({ theme }) => {
     const {
         typography: { pxToRem },
     } = theme;

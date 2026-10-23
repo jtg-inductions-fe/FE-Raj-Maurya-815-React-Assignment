@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 
 import { Alert, TextField, Typography, useTheme } from '@mui/material';
 
-import { ButtonWrapper, LoginWrapper } from './Login.styles';
+import { StyledButton, StyledLogin } from './Login.styles';
 import { LoginFormInput, LoginProps } from './Login.types';
 
 /**
@@ -10,25 +10,23 @@ import { LoginFormInput, LoginProps } from './Login.types';
  * Validates the input formats, and displays error messages.
  */
 export const Login = ({ onSearch, alert, alertMessage }: LoginProps) => {
+    //Hooks
+    const {
+        typography: { pxToRem },
+    } = useTheme();
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<LoginFormInput>();
 
-    const {
-        typography: { pxToRem },
-    } = useTheme();
-
-    /**
-     * call parent search function on submitting.
-     */
+    //Event handler- call parent search function on submitting.
     const onSubmit = (data: LoginFormInput) => {
         onSearch(data.username, data.password);
     };
 
     return (
-        <LoginWrapper
+        <StyledLogin
             width={pxToRem(500)}
             height={pxToRem(500)}
             padding={pxToRem(60)}
@@ -75,15 +73,15 @@ export const Login = ({ onSearch, alert, alertMessage }: LoginProps) => {
                 error={!!errors.password}
                 helperText={errors.password?.message}
             />
-            <ButtonWrapper
+            <StyledButton
                 variant="contained"
                 onClick={(e) => {
                     void handleSubmit(onSubmit)(e);
                 }}
             >
                 Submit
-            </ButtonWrapper>
+            </StyledButton>
             {alert && <Alert severity="error">{alertMessage}</Alert>}
-        </LoginWrapper>
+        </StyledLogin>
     );
 };
