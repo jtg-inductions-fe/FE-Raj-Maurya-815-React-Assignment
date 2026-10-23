@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
-import { Stack, useTheme } from '@mui/material';
+import { Alert, Stack, TextField, Typography, useTheme } from '@mui/material';
 
-import { Login } from '@components';
-import { LoginFormInput } from '@components';
 import { useLazyAuthenticateUserDetailsQuery } from '@services';
 
+import { StyledButton, StyledLogin } from './Login.styles';
+import { LoginFormInput } from './Login.types';
+
 /**
- * Container that handles user login logic.
+ * Container that handles user login logic and ui.
  * It validates credentials and saves the user info along with token to local storage, and
  * redirects the user to profile page after successful login.
  */
@@ -24,17 +26,27 @@ export const LoginContainer = () => {
     const {
         typography: { pxToRem },
     } = useTheme();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<LoginFormInput>();
 
     // Query to call github api, when submit button is clicked.
     const [authenticateUser, { data }] = useLazyAuthenticateUserDetailsQuery();
 
     // Event handler
-    const handleSearch = (username: string, password: string) => {
-        void authenticateUser(password);
-        setLoginDetail({ username: username, password: password });
+    // Call authenticate user query when submit button is clicked.
+    const onSubmit = (formData: LoginFormInput) => {
+        void authenticateUser(formData.password);
+        setLoginDetail({
+            username: formData.username,
+            password: formData.password,
+        });
     };
 
     //useeffect
+    //Checks entered username with reponse username, if matched-> successful, else failed.
     useEffect(() => {
         if (data?.login) {
             if (data.login == loginDetail.username) {
@@ -58,11 +70,67 @@ export const LoginContainer = () => {
             alignItems="center"
             height="100%"
         >
-            <Login
-                onSearch={handleSearch}
-                alert={alert}
-                alertMessage="Incorrect username and password"
-            />
+            <StyledLogin
+                width={pxToRem(500)}
+                height={pxToRem(500)}
+                padding={pxToRem(60)}
+                spacing={pxToRem(20)}
+                textAlign="center"
+            >
+                <Typography variant="h1">Login</Typography>
+                <Typography variant="h6">
+                    Enter your github username as username and personal access
+                    token as password
+                </Typography>
+                <TextField
+                    id="outlined-basic"
+                    label="Username"
+                    variant="outlined"
+                    required
+                    {...register('username', {
+                        required: 'Username is required',
+                        maxLength: {
+                            value: 39,
+                            message: 'Maximum allowed length is 39',
+                        },
+                        pattern: {
+                            value: /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i,
+                            message: 'Invalid username format',
+                        },
+                    })}
+                    error={!!errors.username}
+                    helperText={errors.username?.message}
+                />
+                <TextField
+                    id="outlined-basic"
+                    label="Password"
+                    type="password"
+                    variant="outlined"
+                    required
+                    {...register('password', {
+                        required: 'Password is required',
+                        pattern: {
+                            value: /^(gh[ps]_[a-zA-Z0-9]{36}|github_pat_[a-zA-Z0-9]{22}_[a-zA-Z0-9]{59})$/,
+                            message: 'Invalid password format',
+                        },
+                    })}
+                    error={!!errors.password}
+                    helperText={errors.password?.message}
+                />
+                <StyledButton
+                    variant="contained"
+                    onClick={(e) => {
+                        void handleSubmit(onSubmit)(e);
+                    }}
+                >
+                    Submit
+                </StyledButton>
+                {alert && (
+                    <Alert severity="error">
+                        Incorrect username and password
+                    </Alert>
+                )}
+            </StyledLogin>
         </Stack>
     );
 };
