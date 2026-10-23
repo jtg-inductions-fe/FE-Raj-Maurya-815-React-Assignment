@@ -7,7 +7,7 @@ import { github } from '@services';
 import { appStore } from '@store';
 
 import { StyledNavbar } from './Navbar.styles';
-import { BrandLogoWrapper, ButtonWrapper } from './Navbar.styles';
+import { StyledBrandLogo, StyledButton } from './Navbar.styles';
 
 /**
  * Navigation bar- it displays the brand logo and
@@ -15,21 +15,20 @@ import { BrandLogoWrapper, ButtonWrapper } from './Navbar.styles';
  * depending on what page the user is viewing and whether the user is authenticated or not.
  */
 export const Navbar = () => {
+    //Hooks
     const navigate = useNavigate();
     const location = useLocation();
-
     const { isAuthenticated } = useAuth();
-
     const {
         typography: { pxToRem },
     } = useTheme();
 
+    //Constants
     const isHomePage = location.pathname === '/';
     const isProfilePage = location.pathname === '/profile';
 
-    /**
-     * Remove data from local storage and clear store, then navigate user to login page.
-     */
+    //Event handlers
+    //Remove data from local storage and clear store, then navigate user to login page.
     const logoutHandler = () => {
         localStorage.removeItem('userData');
         appStore.dispatch(github.util.resetApiState());
@@ -40,7 +39,7 @@ export const Navbar = () => {
         <StyledNavbar color="transparent" elevation={0} position="sticky">
             <Toolbar sx={{ justifyContent: 'space-between' }}>
                 <Stack flexDirection="row" gap={pxToRem(10)}>
-                    <BrandLogoWrapper src="/images/brand-logo.webp" />
+                    <StyledBrandLogo src="/images/brand-logo.webp" />
                     <Typography variant="h4">Github Finder</Typography>
                 </Stack>
 
@@ -49,47 +48,47 @@ export const Navbar = () => {
                     sx={{ gap: { xs: pxToRem(4), md: pxToRem(10) } }}
                 >
                     {!isHomePage && (
-                        <ButtonWrapper
+                        <StyledButton
                             variant="outlined"
                             onClick={() => void navigate('/')}
                         >
                             Search User
-                        </ButtonWrapper>
+                        </StyledButton>
                     )}
                     {isAuthenticated && isHomePage && (
                         <>
-                            <ButtonWrapper
+                            <StyledButton
                                 variant="outlined"
                                 onClick={() => void navigate('/profile')}
                             >
                                 profile
-                            </ButtonWrapper>
-                            <ButtonWrapper
+                            </StyledButton>
+                            <StyledButton
                                 variant="outlined"
                                 onClick={logoutHandler}
                             >
                                 logout
-                            </ButtonWrapper>
+                            </StyledButton>
                         </>
                     )}
                     {!isAuthenticated && isHomePage && (
                         <>
-                            <ButtonWrapper
+                            <StyledButton
                                 variant="outlined"
                                 onClick={() => void navigate('/login')}
                             >
                                 login
-                            </ButtonWrapper>
+                            </StyledButton>
                         </>
                     )}
 
                     {isProfilePage && (
-                        <ButtonWrapper
+                        <StyledButton
                             variant="outlined"
                             onClick={logoutHandler}
                         >
                             logout
-                        </ButtonWrapper>
+                        </StyledButton>
                     )}
                 </Stack>
             </Toolbar>
