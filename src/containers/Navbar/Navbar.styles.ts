@@ -2,7 +2,7 @@ import { AppBar, Button, styled } from '@mui/material';
 
 import { COLORS } from '@constant';
 
-export const NavHeader = styled(AppBar)(({ theme }) => {
+export const StyledNavbar = styled(AppBar)(({ theme }) => {
     const {
         typography: { pxToRem },
         palette: { background, divider },

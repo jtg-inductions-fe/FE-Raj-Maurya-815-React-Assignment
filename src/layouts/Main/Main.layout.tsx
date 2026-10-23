@@ -10,10 +10,10 @@ import { useAuth } from '@hooks';
  * It puts the navigation bar at the top and display the main page content below it.
  */
 export const MainLayout = () => {
+    //Hooks
     const {
         palette: { background },
     } = useTheme();
-
     const { isLoading } = useAuth();
 
     if (isLoading)

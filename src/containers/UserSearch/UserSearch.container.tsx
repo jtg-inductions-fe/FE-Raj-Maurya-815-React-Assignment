@@ -24,24 +24,27 @@ import type { OnSearch } from './UserSearch.types';
  * Container that manages GitHub user search state, debounced suggestions.
  */
 export const UserSearchContainer = () => {
+    //Hooks
     const [inputValue, setInputValue] = useState('');
     const debouncingName = useDebounce(inputValue, 500);
     const [searchParams, setSearchParams] = useSearchParams();
-    const searchQuery = searchParams.get('search');
-
     const {
         typography: { pxToRem },
     } = useTheme();
 
+    //Constants
+    const searchQuery = searchParams.get('search');
+
+    //Variables
     let listdata: UserListItem[] = [];
 
+    //Queries
     const { data: suggestedData } = useGetSuggestedUserDetailsQuery(
         debouncingName,
         {
             skip: debouncingName === '',
         },
     );
-
     const [fetchUserDetails, { data, error, isLoading }] =
         useLazyGetUserDetailsQuery();
 
@@ -54,21 +57,18 @@ export const UserSearchContainer = () => {
         }
     }
 
-    /**
-     * Updates input value to trigger the suggestion debounce.
-     */
+    //Event handlers
+    //Updates input value to trigger the suggestion debounce.
     const onInputChange = (username: string): void => {
         setInputValue(username);
     };
-
-    /**
-     * Updates search username and  the URL search query parameters.
-     */
+    // Updates search username and  the URL search query parameters.
     const onSearch: OnSearch = (username) => {
         void fetchUserDetails(username);
         setSearchParams({ search: username });
     };
 
+    //Useeffects
     useEffect(() => {
         if (searchQuery) {
             void fetchUserDetails(searchQuery);

@@ -8,7 +8,6 @@ import { Protected } from './Protected.route';
 
 /**
  * Application router configuration.
- *
  */
 export const router = createBrowserRouter([
     {

@@ -1,4 +1,5 @@
 import { URLS } from '@constant';
+import { LocalUserData } from '@layouts';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 /**
@@ -12,6 +13,16 @@ export const github = createApi({
         prepareHeaders: (headers) => {
             headers.set('Accept', 'application/vnd.github+json');
             headers.set('X-GitHub-Api-Version', '2026-03-10');
+
+            const userData = localStorage.getItem('userData');
+
+            const token = userData
+                ? (JSON.parse(userData) as LocalUserData).personal_access_token
+                : '';
+
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
             return headers;
         },
     }),

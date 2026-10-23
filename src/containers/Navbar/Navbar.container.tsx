@@ -6,7 +6,7 @@ import { useAuth } from '@hooks';
 import { github } from '@services';
 import { appStore } from '@store';
 
-import { NavHeader } from './Navbar.styles';
+import { StyledNavbar } from './Navbar.styles';
 import { BrandLogoWrapper, ButtonWrapper } from './Navbar.styles';
 
 /**
@@ -37,7 +37,7 @@ export const Navbar = () => {
     };
 
     return (
-        <NavHeader color="transparent" elevation={0} position="sticky">
+        <StyledNavbar color="transparent" elevation={0} position="sticky">
             <Toolbar sx={{ justifyContent: 'space-between' }}>
                 <Stack flexDirection="row" gap={pxToRem(10)}>
                     <BrandLogoWrapper src="/images/brand-logo.webp" />
@@ -93,6 +93,6 @@ export const Navbar = () => {
                     )}
                 </Stack>
             </Toolbar>
-        </NavHeader>
+        </StyledNavbar>
     );
 };

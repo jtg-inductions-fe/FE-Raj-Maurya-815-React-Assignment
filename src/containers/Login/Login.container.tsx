@@ -14,28 +14,27 @@ import { useLazyAuthenticateUserDetailsQuery } from '@services';
  * redirects the user to profile page after successful login.
  */
 export const LoginContainer = () => {
+    // Hooks
     const navigate = useNavigate();
     const [loginDetail, setLoginDetail] = useState<LoginFormInput>({
         username: '',
         password: '',
     });
     const [alert, setAlert] = useState<boolean>(false);
-
     const {
         typography: { pxToRem },
     } = useTheme();
 
-    /**
-     * Query to call github api, when submit button is clicked.
-     */
-
+    // Query to call github api, when submit button is clicked.
     const [authenticateUser, { data }] = useLazyAuthenticateUserDetailsQuery();
 
+    // Event handler
     const handleSearch = (username: string, password: string) => {
         void authenticateUser(password);
         setLoginDetail({ username: username, password: password });
     };
 
+    //useeffect
     useEffect(() => {
         if (data?.login) {
             if (data.login == loginDetail.username) {

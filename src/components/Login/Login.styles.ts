@@ -1,6 +1,6 @@
 import { Button, Stack, styled } from '@mui/material';
 
-export const LoginWrapper = styled(Stack)(({ theme }) => {
+export const StyledLogin = styled(Stack)(({ theme }) => {
     const {
         typography: { pxToRem },
         shadows,
@@ -12,7 +12,7 @@ export const LoginWrapper = styled(Stack)(({ theme }) => {
     };
 });
 
-export const ButtonWrapper = styled(Button)(({ theme }) => {
+export const StyledButton = styled(Button)(({ theme }) => {
     const {
         typography: { pxToRem },
     } = theme;

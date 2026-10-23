@@ -8,16 +8,12 @@ import { github } from './base.service';
  */
 export const userApi = github.injectEndpoints({
     endpoints: (builder) => ({
-        /**
-         * Fetches profile details for a user.
-         */
+        //Fetches profile details for a user.
         getUserDetails: builder.query<GithubUser, string>({
             query: (username) => URLS.USER_DETAILS(username),
         }),
 
-        /**
-         * Fetches matching user profiles for search suggestions.
-         */
+        //Fetches matching user profiles for search suggestions.
         getSuggestedUserDetails: builder.query<
             GithubSuggestedUserResponse,
             string
@@ -25,9 +21,7 @@ export const userApi = github.injectEndpoints({
             query: (username) => URLS.SUGGESTED_USERS(username),
         }),
 
-        /**
-         * Fetch user detail using personal access token.
-         */
+        //Fetch user detail using personal access token.
         authenticateUserDetails: builder.query<GithubUser, string>({
             query: (password) => ({
                 url: URLS.USER,

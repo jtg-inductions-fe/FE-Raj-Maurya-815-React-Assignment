@@ -8,11 +8,11 @@ import { useAuth } from '@hooks';
  * and then show their UserInfo card.
  */
 export const ProfileContainer = () => {
-    const { isLoading, user } = useAuth();
-
+    //Hooks
     const {
         typography: { pxToRem },
     } = useTheme();
+    const { isLoading, user } = useAuth();
 
     if (isLoading || user === null)
         return <CircularProgress aria-label="Loading…" />;
