@@ -8,7 +8,8 @@ import {
     useTheme,
 } from '@mui/material';
 
-import { StyledSubmitButton } from './SearchBox.styles';
+import { CustomButton } from '@components';
+
 import { SearchBoxProps } from './SearchBox.types';
 
 /**
@@ -83,9 +84,9 @@ export const SearchBox = ({
                     <TextField {...params} label={searchBoxLabel} />
                 )}
             />
-            <StyledSubmitButton variant="contained" onClick={handleSubmit}>
+            <CustomButton onClick={handleSubmit} fontSize={18}>
                 submit
-            </StyledSubmitButton>
+            </CustomButton>
         </Stack>
     );
 };
