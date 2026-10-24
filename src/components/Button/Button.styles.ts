@@ -22,6 +22,7 @@ export const StyledButton = styled(Button, {
     marginRight,
     fontSize,
     textColor,
+    flexShrink,
 }) => {
     const {
         typography: { pxToRem },
@@ -30,6 +31,7 @@ export const StyledButton = styled(Button, {
     return {
         borderRadius: pxToRem(10),
         textTransform: 'capitalize',
+        flexShrink: 0,
         ...(width !== undefined && { width: pxToRem(width) }),
         ...(height !== undefined && { height: pxToRem(height) }),
         ...(marginLeft !== undefined && { marginLeft: pxToRem(marginLeft) }),
@@ -37,5 +39,6 @@ export const StyledButton = styled(Button, {
         ...(fontSize !== undefined && { fontSize: pxToRem(fontSize) }),
         ...(textColor && { color: textColor }),
         ...(borderColor && { borderColor }),
+        ...(flexShrink && { flexShrink }),
     };
 });

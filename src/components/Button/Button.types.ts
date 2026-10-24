@@ -14,4 +14,6 @@ export type CustomButtonProps = {
     fontSize?: number;
     textColor?: string;
     borderColor?: string;
+    flexShrink?: number;
+    disabled?: true | false;
 };

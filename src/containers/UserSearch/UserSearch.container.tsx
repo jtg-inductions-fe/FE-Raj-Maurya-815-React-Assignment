@@ -12,8 +12,10 @@ import {
 
 import type { UserListItem } from '@components';
 import { SearchBox, UserInfo } from '@components';
-import { useDebounce } from '@hooks';
+import { useAuth, useDebounce } from '@hooks';
 import {
+    useCheckUserFollowingQuery,
+    useFollowUserMutation,
     useGetSuggestedUserDetailsQuery,
     useLazyGetUserDetailsQuery,
 } from '@services';
@@ -31,6 +33,8 @@ export const UserSearchContainer = () => {
     const {
         typography: { pxToRem },
     } = useTheme();
+    const [followUser] = useFollowUserMutation();
+    const { isAuthenticated: isLogin, user: loginUserData } = useAuth();
 
     //Constants
     const searchQuery = searchParams.get('search');
@@ -47,8 +51,17 @@ export const UserSearchContainer = () => {
         },
     );
     //Fetch user details when fetchUserDetails is called.
-    const [fetchUserDetails, { data, error, isLoading }] =
+    const [fetchUserDetails, { data: searhedUserData, error, isLoading }] =
         useLazyGetUserDetailsQuery();
+    // checks whether target user is followed or not.
+    const { data: followingData, isLoading: isFollowingLoading } =
+        useCheckUserFollowingQuery(
+            { target_username: searhedUserData?.login || '' },
+            {
+                skip: !isLogin || !searhedUserData?.login,
+            },
+        );
+    const isFollowing = isFollowingLoading ? true : followingData === true;
 
     if (suggestedData) {
         if (suggestedData.items != null) {
@@ -69,8 +82,16 @@ export const UserSearchContainer = () => {
         void fetchUserDetails(username);
         setSearchParams({ search: username });
     };
+    // Trigger follow mutation which will call follow user api.
+    const handleFollow = () => {
+        if (!searhedUserData?.login || !loginUserData?.login) return;
+        void followUser({
+            username: loginUserData.login,
+            target_username: searhedUserData.login,
+        });
+    };
 
-    //Useeffects
+    //useeffects
     useEffect(() => {
         if (searchQuery) {
             void fetchUserDetails(searchQuery);
@@ -98,7 +119,14 @@ export const UserSearchContainer = () => {
             {error && (
                 <Alert severity="error">Username doesn&apos;t exists</Alert>
             )}
-            {data && !error && <UserInfo user={data} />}
+            {searhedUserData && !error && (
+                <UserInfo
+                    user={searhedUserData}
+                    isLogin={isLogin}
+                    handleFollow={handleFollow}
+                    isFollowing={isFollowing}
+                />
+            )}
         </Stack>
     );
 };
