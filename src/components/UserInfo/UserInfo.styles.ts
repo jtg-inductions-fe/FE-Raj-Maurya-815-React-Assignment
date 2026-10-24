@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, Link, Typography } from '@mui/material';
+import { Avatar, Card, Link, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export const StyledProfileCard = styled(Card)(({ theme }) => {
@@ -58,26 +58,5 @@ export const StyledUserHandle = styled(Typography)(({ theme }) => {
         marginBottom: pxToRem(12),
         paddingBottom: pxToRem(8),
         borderBottom: `${pxToRem(1)} solid ${divider}`,
-    };
-});
-
-export const StyledButton = styled(Button)(({ theme }) => {
-    const {
-        typography: { pxToRem },
-        breakpoints: { down },
-        palette,
-    } = theme;
-
-    return {
-        position: 'absolute',
-        right: pxToRem(10),
-        textTransform: 'capitalize',
-        fontSize: pxToRem(16),
-        borderColor: palette.text.primary,
-        color: palette.text.primary,
-        [down('md')]: {
-            fontSize: pxToRem(14),
-            padding: pxToRem(4),
-        },
     };
 });
