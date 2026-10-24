@@ -1,4 +1,4 @@
-import { AppBar, Button, styled } from '@mui/material';
+import { AppBar, styled } from '@mui/material';
 
 export const StyledNavbar = styled(AppBar)(({ theme }) => {
     const {
@@ -18,25 +18,6 @@ export const StyledNavbar = styled(AppBar)(({ theme }) => {
         [down('md')]: {
             paddingLeft: pxToRem(12),
             paddingRight: pxToRem(12),
-        },
-    };
-});
-
-export const StyledButton = styled(Button)(({ theme }) => {
-    const {
-        typography: { pxToRem },
-        breakpoints: { down },
-        palette: { text },
-    } = theme;
-
-    return {
-        textTransform: 'capitalize',
-        fontSize: pxToRem(16),
-        borderColor: text.primary,
-        color: text.primary,
-        [down('md')]: {
-            fontSize: pxToRem(14),
-            padding: pxToRem(4),
         },
     };
 });

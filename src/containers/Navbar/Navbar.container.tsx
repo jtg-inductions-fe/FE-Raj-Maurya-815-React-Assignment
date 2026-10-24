@@ -2,12 +2,13 @@ import { useLocation, useNavigate } from 'react-router';
 
 import { Stack, Toolbar, Typography, useTheme } from '@mui/material';
 
+import { CustomButton } from '@components';
 import { useAuth } from '@hooks';
 import { github } from '@services';
 import { appStore } from '@store';
 
 import { StyledNavbar } from './Navbar.styles';
-import { StyledBrandLogo, StyledButton } from './Navbar.styles';
+import { StyledBrandLogo } from './Navbar.styles';
 
 /**
  * Navigation bar- it displays the brand logo and
@@ -21,6 +22,9 @@ export const Navbar = () => {
     const { isAuthenticated } = useAuth();
     const {
         typography: { pxToRem },
+        palette: {
+            text: { primary },
+        },
     } = useTheme();
 
     //Constants
@@ -48,47 +52,62 @@ export const Navbar = () => {
                     sx={{ gap: { xs: pxToRem(4), md: pxToRem(10) } }}
                 >
                     {!isHomePage && (
-                        <StyledButton
+                        <CustomButton
                             variant="outlined"
+                            fontSize={15}
+                            textColor={primary}
+                            borderColor={primary}
                             onClick={() => void navigate('/')}
                         >
                             Search User
-                        </StyledButton>
+                        </CustomButton>
                     )}
                     {isAuthenticated && isHomePage && (
                         <>
-                            <StyledButton
+                            <CustomButton
                                 variant="outlined"
+                                fontSize={15}
+                                textColor={primary}
+                                borderColor={primary}
                                 onClick={() => void navigate('/profile')}
                             >
                                 profile
-                            </StyledButton>
-                            <StyledButton
+                            </CustomButton>
+                            <CustomButton
+                                fontSize={15}
+                                textColor={primary}
+                                borderColor={primary}
                                 variant="outlined"
                                 onClick={logoutHandler}
                             >
                                 logout
-                            </StyledButton>
+                            </CustomButton>
                         </>
                     )}
                     {!isAuthenticated && isHomePage && (
                         <>
-                            <StyledButton
+                            <CustomButton
+                                textColor={primary}
+                                borderColor={primary}
+                                fontSize={15}
                                 variant="outlined"
                                 onClick={() => void navigate('/login')}
                             >
                                 login
-                            </StyledButton>
+                            </CustomButton>
                         </>
                     )}
 
                     {isProfilePage && (
-                        <StyledButton
+                        <CustomButton
+                            fontSize={15}
+                            textColor={primary}
+                            borderColor={primary}
                             variant="outlined"
                             onClick={logoutHandler}
                         >
                             logout
-                        </StyledButton>
+                        </CustomButton>
                     )}
                 </Stack>
             </Toolbar>

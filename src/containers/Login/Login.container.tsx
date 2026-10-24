@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router';
 
 import { Alert, Stack, TextField, Typography, useTheme } from '@mui/material';
 
+import { CustomButton } from '@components';
 import { useLazyAuthenticateUserDetailsQuery } from '@services';
 
-import { StyledButton, StyledLogin } from './Login.styles';
+import { StyledLogin } from './Login.styles';
 import { LoginFormInput } from './Login.types';
 
 /**
@@ -117,14 +118,13 @@ export const LoginContainer = () => {
                     error={!!errors.password}
                     helperText={errors.password?.message}
                 />
-                <StyledButton
-                    variant="contained"
+                <CustomButton
                     onClick={(e) => {
                         void handleSubmit(onSubmit)(e);
                     }}
                 >
                     Submit
-                </StyledButton>
+                </CustomButton>
                 {alert && (
                     <Alert severity="error">
                         Incorrect username and password
