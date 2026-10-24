@@ -2,11 +2,12 @@ import { createBrowserRouter } from 'react-router';
 
 import { ROUTES } from '@constant';
 import { MainLayout } from '@layouts';
-import { Error, NotFound, UserSearch } from '@pages';
+import { Error, Login, NotFound, ProfilePage, UserSearch } from '@pages';
+
+import { Protected } from './Protected.route';
 
 /**
  * Application router configuration.
- *
  */
 export const router = createBrowserRouter([
     {
@@ -15,6 +16,11 @@ export const router = createBrowserRouter([
         errorElement: <Error />,
         children: [
             { index: true, element: <UserSearch /> },
+            { path: ROUTES.LOGIN, element: <Login /> },
+            {
+                element: <Protected />,
+                children: [{ path: ROUTES.PROFILE, element: <ProfilePage /> }],
+            },
             { path: ROUTES.NOT_FOUND, element: <NotFound /> },
         ],
     },

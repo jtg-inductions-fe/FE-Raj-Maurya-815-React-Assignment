@@ -32,7 +32,7 @@ const typographyStyle = (theme: Theme): TypographyOptions => ({
 
     h1: {
         fontSize: typographyUtil.pxToRem(30),
-        fontWeight: 700,
+        fontWeight: 500,
         lineHeight: typographyUtil.pxToRem(45),
 
         [theme.breakpoints.up('md')]: {
@@ -42,7 +42,7 @@ const typographyStyle = (theme: Theme): TypographyOptions => ({
     },
     h2: {
         fontSize: typographyUtil.pxToRem(24),
-        fontWeight: 700,
+        fontWeight: 500,
         lineHeight: typographyUtil.pxToRem(36),
 
         [theme.breakpoints.up('md')]: {
@@ -53,7 +53,7 @@ const typographyStyle = (theme: Theme): TypographyOptions => ({
 
     h3: {
         fontSize: typographyUtil.pxToRem(20),
-        fontWeight: 600,
+        fontWeight: 400,
         lineHeight: typographyUtil.pxToRem(30),
 
         [theme.breakpoints.up('md')]: {
@@ -64,7 +64,7 @@ const typographyStyle = (theme: Theme): TypographyOptions => ({
 
     h4: {
         fontSize: typographyUtil.pxToRem(18),
-        fontWeight: 600,
+        fontWeight: 400,
         lineHeight: typographyUtil.pxToRem(28),
 
         [theme.breakpoints.up('md')]: {
@@ -75,7 +75,7 @@ const typographyStyle = (theme: Theme): TypographyOptions => ({
 
     h5: {
         fontSize: typographyUtil.pxToRem(16),
-        fontWeight: 500,
+        fontWeight: 400,
         lineHeight: typographyUtil.pxToRem(24),
 
         [theme.breakpoints.up('md')]: {
@@ -96,12 +96,12 @@ const typographyStyle = (theme: Theme): TypographyOptions => ({
     },
     body1: {
         fontSize: typographyUtil.pxToRem(16),
-        fontWeight: 400,
+        fontWeight: 300,
         lineHeight: 1.5,
     },
     body2: {
         fontSize: typographyUtil.pxToRem(14),
-        fontWeight: 400,
+        fontWeight: 300,
         lineHeight: 1.4,
     },
 });
