@@ -7,9 +7,11 @@ export type CustomButtonProps = {
     variant?: 'outlined' | 'contained';
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
     children: React.ReactNode;
-    width?: string | number;
-    height?: string | number;
+    width?: number;
+    height?: number;
     marginLeft?: number;
     marginRight?: number;
     fontSize?: number;
+    textColor?: string;
+    borderColor?: string;
 };

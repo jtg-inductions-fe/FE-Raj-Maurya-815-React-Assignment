@@ -7,30 +7,35 @@ export const StyledButton = styled(Button, {
         ![
             'width',
             'height',
-            'textTransform',
             'marginLeft',
             'marginRight',
             'fontSize',
+            'borderColor',
+            'textColor',
         ].includes(prop as string),
 })<CustomButtonProps>(({
     theme,
-    width = 'auto',
-    height = 'auto',
-    marginLeft = 0,
-    marginRight = 0,
-    fontSize = 14,
+    borderColor,
+    width,
+    height,
+    marginLeft,
+    marginRight,
+    fontSize,
+    textColor,
 }) => {
     const {
         typography: { pxToRem },
     } = theme;
 
     return {
-        width: typeof width === 'number' ? pxToRem(width) : width,
-        height: typeof height === 'number' ? pxToRem(height) : height,
         borderRadius: pxToRem(10),
         textTransform: 'capitalize',
-        marginLeft: pxToRem(marginLeft),
-        marginRight: pxToRem(marginRight),
-        fontSize: pxToRem(fontSize),
+        ...(width !== undefined && { width: pxToRem(width) }),
+        ...(height !== undefined && { height: pxToRem(height) }),
+        ...(marginLeft !== undefined && { marginLeft: pxToRem(marginLeft) }),
+        ...(marginRight !== undefined && { marginRight: pxToRem(marginRight) }),
+        ...(fontSize !== undefined && { fontSize: pxToRem(fontSize) }),
+        ...(textColor && { color: textColor }),
+        ...(borderColor && { borderColor }),
     };
 });
