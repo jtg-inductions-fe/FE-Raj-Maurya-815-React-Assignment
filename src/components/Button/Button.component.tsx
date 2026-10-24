@@ -7,23 +7,10 @@ import { CustomButtonProps } from './Button.types';
  */
 export const CustomButton = ({
     variant = 'contained',
-    onClick,
-    width,
-    height,
-    marginLeft,
-    marginRight,
-    fontSize,
     children,
+    ...rest
 }: CustomButtonProps) => (
-    <StyledButton
-        variant={variant}
-        onClick={onClick}
-        width={width}
-        height={height}
-        marginLeft={marginLeft}
-        marginRight={marginRight}
-        fontSize={fontSize}
-    >
+    <StyledButton variant={variant} {...rest}>
         {children}
     </StyledButton>
 );
