@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router';
 
-import { Stack, Toolbar, Typography, useTheme } from '@mui/material';
+import { Box, Stack, Toolbar, Typography, useTheme } from '@mui/material';
 
 import { CustomButton } from '@components';
 import { useAuth } from '@hooks';
@@ -8,7 +8,6 @@ import { github } from '@services';
 import { appStore } from '@store';
 
 import { StyledNavbar } from './Navbar.styles';
-import { StyledBrandLogo } from './Navbar.styles';
 
 /**
  * Navigation bar- it displays the brand logo and
@@ -43,7 +42,11 @@ export const Navbar = () => {
         <StyledNavbar color="transparent" elevation={0} position="sticky">
             <Toolbar sx={{ justifyContent: 'space-between' }}>
                 <Stack flexDirection="row" gap={pxToRem(10)}>
-                    <StyledBrandLogo src="/images/brand-logo.webp" />
+                    <Box
+                        component="img"
+                        src="/images/brand-logo.webp"
+                        sx={{ height: pxToRem(30) }}
+                    />
                     <Typography variant="h4">Github Finder</Typography>
                 </Stack>
 
