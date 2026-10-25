@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { SxProps } from '@mui/material';
+
 /**
  * Represet button props type.
  */
@@ -9,8 +11,7 @@ export type CustomButtonProps = {
     children: React.ReactNode;
     width?: number;
     height?: number;
-    marginLeft?: number;
-    marginRight?: number;
+    sx?: SxProps;
     fontSize?: number;
     textColor?: string;
     borderColor?: string;

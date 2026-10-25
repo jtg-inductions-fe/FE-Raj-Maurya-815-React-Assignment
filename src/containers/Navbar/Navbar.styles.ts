@@ -21,13 +21,3 @@ export const StyledNavbar = styled(AppBar)(({ theme }) => {
         },
     };
 });
-
-export const StyledBrandLogo = styled('img')(({ theme }) => {
-    const {
-        typography: { pxToRem },
-    } = theme;
-
-    return {
-        height: pxToRem(30),
-    };
-});
