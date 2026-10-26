@@ -11,6 +11,7 @@ import { useAuth } from '@hooks';
  * user back to the login page if not authenticated.
  */
 export const Protected = () => {
+    //Hooks
     const { isAuthenticated, isLoading } = useAuth();
 
     if (isLoading) {

@@ -39,12 +39,14 @@ export const UserSearchContainer = () => {
     let listdata: UserListItem[] = [];
 
     //Queries
+    //To get suggested user while typing.
     const { data: suggestedData } = useGetSuggestedUserDetailsQuery(
         debouncingName,
         {
             skip: debouncingName === '',
         },
     );
+    //Fetch user details when fetchUserDetails is called.
     const [fetchUserDetails, { data, error, isLoading }] =
         useLazyGetUserDetailsQuery();
 
