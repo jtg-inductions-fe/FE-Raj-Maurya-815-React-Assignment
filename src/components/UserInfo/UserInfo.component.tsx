@@ -7,28 +7,65 @@ import {
     StyledUserHandle,
 } from './UserInfo.styles';
 import { UserInfoProps } from './UserInfo.types';
+import { CustomButton } from '../Button';
 
 /**
- * UI card component that displays GitHub profile information for a user.
+ * UI card component that displays GitHub profile information for a user and has follow button.
  */
-export const UserInfo = ({ user }: UserInfoProps) => {
+export const UserInfo = ({
+    user,
+    handleFollow,
+    isFollowing = true,
+    isLogin = false,
+}: UserInfoProps) => {
     //Hooks
     const {
         typography: { pxToRem },
+        palette: {
+            text: { primary },
+        },
     } = useTheme();
+
+    //Event handlers
+    // call follow user api.
+    const handleClick = () => {
+        if (handleFollow) handleFollow();
+    };
 
     return (
         <StyledProfileCard>
             <CardContent>
                 <Stack
+                    position="relative"
                     direction={{ xs: 'column', sm: 'row' }}
                     spacing={pxToRem(30)}
                 >
                     <StyledProfileAvatar src={user.avatar_url} alt="avatar" />
                     <Stack width="100%">
-                        <Typography variant="h2">
-                            {user.name || user.login}
-                        </Typography>
+                        <Stack
+                            flexDirection="row"
+                            justifyContent="space-between"
+                        >
+                            <Typography
+                                variant="h2"
+                                sx={{ wordBreak: 'break-all' }}
+                            >
+                                {user.name || user.login}
+                            </Typography>
+                            {isLogin && (
+                                <CustomButton
+                                    fontSize={16}
+                                    height={40}
+                                    textColor={primary}
+                                    borderColor={primary}
+                                    variant="outlined"
+                                    onClick={handleClick}
+                                    disabled={isFollowing}
+                                >
+                                    {isFollowing ? 'following' : 'follow'}
+                                </CustomButton>
+                            )}
+                        </Stack>
 
                         <StyledUserHandle variant="body1">
                             @{user.login}
@@ -117,7 +154,7 @@ export const UserInfo = ({ user }: UserInfoProps) => {
                                 </Stack>
                             )}
 
-                            {user.url && (
+                            {user.html_url && (
                                 <Stack
                                     direction="row"
                                     alignItems="baseline"
@@ -128,10 +165,10 @@ export const UserInfo = ({ user }: UserInfoProps) => {
                                         GitHub-
                                     </Typography>
                                     <StyledInfoLink
-                                        href={user.url}
+                                        href={user.html_url}
                                         variant="h6"
                                     >
-                                        {user.url}
+                                        {user.html_url}
                                     </StyledInfoLink>
                                 </Stack>
                             )}
