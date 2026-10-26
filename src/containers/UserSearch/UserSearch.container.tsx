@@ -1,0 +1,101 @@
+import { useEffect, useState } from 'react';
+
+import { useSearchParams } from 'react-router';
+
+import {
+    Alert,
+    CircularProgress,
+    Stack,
+    Typography,
+    useTheme,
+} from '@mui/material';
+
+import type { UserListItem } from '@components';
+import { SearchBox, UserInfo } from '@components';
+import { useDebounce } from '@hooks';
+import {
+    useGetSuggestedUserDetailsQuery,
+    useLazyGetUserDetailsQuery,
+} from '@services';
+
+import type { OnSearch } from './UserSearch.types';
+
+/**
+ * Container that manages GitHub user search state, debounced suggestions.
+ */
+export const UserSearchContainer = () => {
+    const [inputValue, setInputValue] = useState('');
+    const debouncingName = useDebounce(inputValue, 500);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const searchQuery = searchParams.get('search');
+
+    const {
+        typography: { pxToRem },
+    } = useTheme();
+
+    let listdata: UserListItem[] = [];
+
+    const { data: suggestedData } = useGetSuggestedUserDetailsQuery(
+        debouncingName,
+        {
+            skip: debouncingName === '',
+        },
+    );
+
+    const [fetchUserDetails, { data, error, isLoading }] =
+        useLazyGetUserDetailsQuery();
+
+    if (suggestedData) {
+        if (suggestedData.items != null) {
+            listdata = suggestedData.items.map((item: UserListItem) => ({
+                login: item.login,
+                avatar_url: item.avatar_url,
+            }));
+        }
+    }
+
+    /**
+     * Updates input value to trigger the suggestion debounce.
+     */
+    const onInputChange = (username: string): void => {
+        setInputValue(username);
+    };
+
+    /**
+     * Updates search username and  the URL search query parameters.
+     */
+    const onSearch: OnSearch = (username) => {
+        void fetchUserDetails(username);
+        setSearchParams({ search: username });
+    };
+
+    useEffect(() => {
+        if (searchQuery) {
+            void fetchUserDetails(searchQuery);
+        }
+    }, []);
+
+    return (
+        <Stack
+            justifyContent="center"
+            alignItems="center"
+            spacing={pxToRem(20)}
+        >
+            <Typography variant="h1" sx={{ pb: pxToRem(20) }}>
+                Find a github user
+            </Typography>
+            <SearchBox
+                onSearch={onSearch}
+                initialValue={searchQuery}
+                listdata={listdata}
+                onInputChange={onInputChange}
+                searchBoxLabel={'Enter github username'}
+            />
+            {isLoading && <CircularProgress aria-label="Loading…" />}
+            {error && (
+                <Alert severity="error">Username doesn&apos;t exists</Alert>
+            )}
+            {data && !error && <UserInfo user={data} />}
+        </Stack>
+    );
+};

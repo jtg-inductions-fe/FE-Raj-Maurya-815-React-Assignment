@@ -18,11 +18,10 @@ const fontFaceDeclarations = `
 
 export const components: Components = {
     MuiCssBaseline: {
-        styleOverrides: {
-            html: {
-                fontSize: '62.5%',
-            },
-            fontFaceDeclarations,
-        },
+        styleOverrides: `
+        ${fontFaceDeclarations}
+            html {
+                font-size: 62.5%
+            }`,
     },
 };
