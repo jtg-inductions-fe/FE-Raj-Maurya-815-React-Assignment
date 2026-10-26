@@ -7,17 +7,23 @@ import { FallbackProps } from './Fallback.types';
  * Centers a fallback image and headline.
  */
 export const Fallback = ({ imgSrc, imgAlt, message }: FallbackProps) => {
+    //Hooks
     const {
         typography: { pxToRem },
     } = useTheme();
 
     return (
-        <Stack justifyContent="center" alignItems="center" height="100vh">
+        <Stack
+            justifyContent="center"
+            alignItems="center"
+            marginTop={pxToRem(250)}
+        >
             <Box
                 component="img"
                 src={imgSrc}
                 alt={imgAlt}
-                width={pxToRem(400)}
+                width={pxToRem(500)}
+                marginBottom={pxToRem(20)}
             />
             <Typography variant="h4">{message}</Typography>
         </Stack>

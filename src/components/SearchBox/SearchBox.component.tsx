@@ -8,7 +8,8 @@ import {
     useTheme,
 } from '@mui/material';
 
-import { SubmitButton } from './SearchBox.styles';
+import { CustomButton } from '@components';
+
 import { SearchBoxProps } from './SearchBox.types';
 
 /**
@@ -21,27 +22,24 @@ export const SearchBox = ({
     onInputChange,
     searchBoxLabel,
 }: SearchBoxProps) => {
+    //Hooks
     const [username, setUsername] = useState('');
-
     const {
         typography: { pxToRem },
     } = useTheme();
 
-    /**
-     * Trims and submit current search input.
-     */
+    //Event handler
+    // Trims and submit current search input.
     const handleSubmit = () => {
         onSearch(username.trim());
     };
-
-    /**
-     * Update username and triggers parent input-change callback.
-     */
+    //Update username and triggers parent input-change callback.
     const handleUpdate = (value: string) => {
         setUsername(value);
         onInputChange(value);
     };
 
+    //useeffects
     useEffect(() => {
         if (initialValue) setUsername(initialValue);
     }, []);
@@ -86,9 +84,9 @@ export const SearchBox = ({
                     <TextField {...params} label={searchBoxLabel} />
                 )}
             />
-            <SubmitButton variant="contained" onClick={handleSubmit}>
+            <CustomButton onClick={handleSubmit} fontSize={18}>
                 submit
-            </SubmitButton>
+            </CustomButton>
         </Stack>
     );
 };

@@ -8,3 +8,4 @@ export type {
     GithubSuggestedUserResponse,
 } from './UserInfo';
 export { Fallback } from './Fallback';
+export { CustomButton } from './Button';
