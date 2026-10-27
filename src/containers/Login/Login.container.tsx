@@ -3,13 +3,23 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
-import { Alert, Stack, TextField, Typography, useTheme } from '@mui/material';
+import {
+    Alert,
+    Box,
+    Stack,
+    TextField,
+    Typography,
+    useTheme,
+} from '@mui/material';
 
 import { CustomButton } from '@components';
+import { useAuth } from '@hooks';
 import { useLazyAuthenticateUserDetailsQuery } from '@services';
 
 import { StyledLogin } from './Login.styles';
 import { LoginFormInput } from './Login.types';
+
+import BrandLogo from '/images/brand-logo-large.webp';
 
 /**
  * Container that handles user login logic and ui.
@@ -19,115 +29,107 @@ import { LoginFormInput } from './Login.types';
 export const LoginContainer = () => {
     // Hooks
     const navigate = useNavigate();
-    const [loginDetail, setLoginDetail] = useState<LoginFormInput>({
-        username: '',
-        password: '',
-    });
     const [alert, setAlert] = useState<boolean>(false);
     const {
         typography: { pxToRem },
+        palette: { divider },
     } = useTheme();
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<LoginFormInput>();
+    const { isAuthenticated, isLoading } = useAuth();
 
     // Query to call github api, when submit button is clicked.
-    const [authenticateUser, { data }] = useLazyAuthenticateUserDetailsQuery();
+    const [authenticateUser] = useLazyAuthenticateUserDetailsQuery();
 
     // Event handler
     // Call authenticate user query when submit button is clicked.
-    const onSubmit = (formData: LoginFormInput) => {
-        void authenticateUser(formData.password);
-        setLoginDetail({
-            username: formData.username,
-            password: formData.password,
-        });
-    };
-
-    //useeffect
-    //Checks entered username with reponse username, if matched-> successful, else failed.
-    useEffect(() => {
-        if (data?.login) {
-            if (data.login == loginDetail.username) {
+    const onSubmit = async (formData: LoginFormInput) => {
+        setAlert(false);
+        try {
+            const data = await authenticateUser(
+                formData.personalAccessToken,
+            ).unwrap();
+            if (data?.login) {
                 const updatedData = {
                     ...data,
-                    personal_access_token: loginDetail.password,
+                    personal_access_token: formData.personalAccessToken,
                 };
 
                 localStorage.setItem('userData', JSON.stringify(updatedData));
-                void navigate('/profile');
+                await navigate('/profile');
             } else {
                 setAlert(true);
             }
+        } catch {
+            setAlert(true);
         }
-    }, [data, loginDetail, navigate]);
+    };
+
+    //useeffects
+    useEffect(() => {
+        if (!isLoading && isAuthenticated) {
+            (async () => {
+                try {
+                    await navigate('/profile', { replace: true });
+                } catch {}
+            })().catch(() => {});
+        }
+    }, [isAuthenticated, isLoading, navigate]);
 
     return (
-        <Stack
-            marginTop={pxToRem(250)}
-            justifyContent="center"
-            alignItems="center"
-            height="100%"
-        >
+        <Stack justifyContent="center" alignItems="center" height="90vh">
             <StyledLogin
-                width={pxToRem(500)}
+                width="80%"
+                maxWidth={pxToRem(500)}
                 height={pxToRem(500)}
                 padding={pxToRem(60)}
                 spacing={pxToRem(20)}
                 textAlign="center"
             >
+                <Box
+                    component="img"
+                    src={BrandLogo}
+                    sx={{ width: '100px', alignSelf: 'center' }}
+                />
                 <Typography variant="h1">Login</Typography>
                 <Typography variant="h6">
-                    Enter your github username as username and personal access
-                    token as password
+                    Enter your github personal access token
                 </Typography>
                 <TextField
                     id="outlined-basic"
-                    label="Username"
-                    variant="outlined"
-                    required
-                    {...register('username', {
-                        required: 'Username is required',
-                        maxLength: {
-                            value: 39,
-                            message: 'Maximum allowed length is 39',
-                        },
-                        pattern: {
-                            value: /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i,
-                            message: 'Invalid username format',
-                        },
-                    })}
-                    error={!!errors.username}
-                    helperText={errors.username?.message}
-                />
-                <TextField
-                    id="outlined-basic"
-                    label="Password"
+                    label="Personal access token"
                     type="password"
                     variant="outlined"
+                    sx={{
+                        '& .MuiOutlinedInput-notchedOutline': {
+                            borderColor: divider,
+                        },
+                    }}
                     required
-                    {...register('password', {
-                        required: 'Password is required',
+                    {...register('personalAccessToken', {
+                        required: 'personal access token is required',
                         pattern: {
                             value: /^(gh[ps]_[a-zA-Z0-9]{36}|github_pat_[a-zA-Z0-9]{22}_[a-zA-Z0-9]{59})$/,
-                            message: 'Invalid password format',
+                            message: 'Invalid personal access token format',
                         },
                     })}
-                    error={!!errors.password}
-                    helperText={errors.password?.message}
+                    error={!!errors.personalAccessToken}
+                    helperText={errors.personalAccessToken?.message}
                 />
                 <CustomButton
                     onClick={(e) => {
-                        void handleSubmit(onSubmit)(e);
+                        handleSubmit(onSubmit)(e).catch(() => {});
+                        return;
                     }}
                 >
                     Submit
                 </CustomButton>
                 {alert && (
                     <Alert severity="error">
-                        Incorrect username and password
+                        Incorrect personal access token
                     </Alert>
                 )}
             </StyledLogin>

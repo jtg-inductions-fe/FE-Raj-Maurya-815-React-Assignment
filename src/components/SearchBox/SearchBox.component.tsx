@@ -26,6 +26,7 @@ export const SearchBox = ({
     const [username, setUsername] = useState('');
     const {
         typography: { pxToRem },
+        palette: { divider },
     } = useTheme();
 
     //Event handler
@@ -45,7 +46,12 @@ export const SearchBox = ({
     }, []);
 
     return (
-        <Stack direction="row" justifyContent="center" spacing={pxToRem(20)}>
+        <Stack
+            direction="row"
+            justifyContent="center"
+            gap={pxToRem(20)}
+            flexWrap="wrap"
+        >
             <Autocomplete
                 freeSolo
                 disablePortal
@@ -71,6 +77,7 @@ export const SearchBox = ({
                         direction="row"
                         spacing={pxToRem(10)}
                         {...props}
+                        key={option.login}
                     >
                         <Avatar
                             src={option.avatar_url}
@@ -81,7 +88,15 @@ export const SearchBox = ({
                     </Stack>
                 )}
                 renderInput={(params) => (
-                    <TextField {...params} label={searchBoxLabel} />
+                    <TextField
+                        sx={{
+                            '& .MuiOutlinedInput-notchedOutline': {
+                                borderColor: divider,
+                            },
+                        }}
+                        {...params}
+                        label={searchBoxLabel}
+                    />
                 )}
             />
             <CustomButton onClick={handleSubmit} fontSize={18}>

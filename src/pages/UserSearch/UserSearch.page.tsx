@@ -11,6 +11,6 @@ export const UserSearch = () => (
     <ErrorBoundary
         fallback={<Alert severity="error">Something went wrong</Alert>}
     >
-        <UserSearchContainer />;
+        <UserSearchContainer />
     </ErrorBoundary>
 );

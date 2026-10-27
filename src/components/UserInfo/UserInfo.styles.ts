@@ -1,6 +1,8 @@
 import { Avatar, Card, Link, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
+import { COLORS } from '@constant';
+
 export const StyledProfileCard = styled(Card)(({ theme }) => {
     const {
         typography: { pxToRem },
@@ -8,11 +10,11 @@ export const StyledProfileCard = styled(Card)(({ theme }) => {
     } = theme;
 
     return {
-        width: pxToRem(600),
+        boxShadow: COLORS.SHADOW.WARM_GLOW_LIGHT,
+        width: pxToRem(800),
         borderRadius: pxToRem(12),
         padding: pxToRem(16),
-
-        [down('sm')]: {
+        [down('md')]: {
             width: '95%',
         },
     };
@@ -22,13 +24,12 @@ export const StyledProfileAvatar = styled(Avatar)(({ theme }) => {
     const {
         typography: { pxToRem },
         breakpoints: { down },
-        shadows,
     } = theme;
 
     return {
         width: pxToRem(100),
         height: pxToRem(100),
-        boxShadow: shadows[4],
+        boxShadow: COLORS.SHADOW.WARM_GLOW_STRONG,
 
         [down('sm')]: {
             width: pxToRem(140),

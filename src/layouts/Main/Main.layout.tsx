@@ -18,12 +18,7 @@ export const MainLayout = () => {
 
     if (isLoading)
         return (
-            <Stack
-                height="100vh"
-                width="100vw"
-                justifyContent="center"
-                alignItems="center"
-            >
+            <Stack width="100vw" justifyContent="center" alignItems="center">
                 <CircularProgress aria-label="Loading…" />;
             </Stack>
         );

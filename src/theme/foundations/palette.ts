@@ -19,8 +19,8 @@ export const palette: PaletteOptions = {
         white: COLORS.COMMON.WHITE,
     },
     background: {
-        default: COLORS.COMMON.OFFWHITE,
-        paper: COLORS.COMMON.WHITE,
+        default: COLORS.COMMON.DEEP_CHARCOAL,
+        paper: COLORS.COMMON.DARK_NAVY,
     },
     divider: COLORS.COMMON.SLATE,
 };
