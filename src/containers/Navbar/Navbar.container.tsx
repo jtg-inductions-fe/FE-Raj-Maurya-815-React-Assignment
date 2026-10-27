@@ -9,6 +9,8 @@ import { appStore } from '@store';
 
 import { StyledNavbar } from './Navbar.styles';
 
+import brandLogo from '/images/brand-logo.svg';
+
 /**
  * Navigation bar- it displays the brand logo and
  * dynamically switches navigation buttons (Search, Profile, Login, Logout)
@@ -52,7 +54,7 @@ export const Navbar = () => {
                 >
                     <Box
                         component="img"
-                        src="/images/brand-logo.webp"
+                        src={brandLogo}
                         sx={{ height: pxToRem(30) }}
                     />
                     <Typography variant="h4">Github Finder</Typography>

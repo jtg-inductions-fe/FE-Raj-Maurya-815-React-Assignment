@@ -1,4 +1,3 @@
-import { URLS } from '@constant';
 import { LocalUserData } from '@layouts';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
@@ -9,7 +8,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const github = createApi({
     reducerPath: 'github',
     baseQuery: fetchBaseQuery({
-        baseUrl: URLS.GITHUB,
+        baseUrl: import.meta.env.VITE_GITHUB_BASE_URL as string,
         prepareHeaders: (headers) => {
             headers.set('Accept', 'application/vnd.github+json');
             headers.set('X-GitHub-Api-Version', '2026-03-10');

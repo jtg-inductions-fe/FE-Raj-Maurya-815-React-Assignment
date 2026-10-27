@@ -23,6 +23,7 @@ export const UserInfo = ({
         typography: { pxToRem },
         palette: {
             text: { primary },
+            divider,
         },
     } = useTheme();
 
@@ -61,6 +62,12 @@ export const UserInfo = ({
                                     variant="outlined"
                                     onClick={handleClick}
                                     disabled={isFollowing}
+                                    sx={{
+                                        '&.Mui-disabled': {
+                                            color: divider,
+                                            borderColor: divider,
+                                        },
+                                    }}
                                 >
                                     {isFollowing ? 'following' : 'follow'}
                                 </CustomButton>

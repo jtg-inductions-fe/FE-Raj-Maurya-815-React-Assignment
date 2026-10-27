@@ -32,6 +32,7 @@ export const LoginContainer = () => {
     const [alert, setAlert] = useState<boolean>(false);
     const {
         typography: { pxToRem },
+        palette: { divider },
     } = useTheme();
     const {
         register,
@@ -106,6 +107,11 @@ export const LoginContainer = () => {
                     label="Personal access token"
                     type="password"
                     variant="outlined"
+                    sx={{
+                        '& .MuiOutlinedInput-notchedOutline': {
+                            borderColor: divider,
+                        },
+                    }}
                     required
                     {...register('personalAccessToken', {
                         required: 'personal access token is required',
