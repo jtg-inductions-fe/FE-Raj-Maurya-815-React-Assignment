@@ -8,11 +8,10 @@ export const StyledProfileCard = styled(Card)(({ theme }) => {
     } = theme;
 
     return {
-        width: pxToRem(600),
+        width: pxToRem(800),
         borderRadius: pxToRem(12),
         padding: pxToRem(16),
-
-        [down('sm')]: {
+        [down('md')]: {
             width: '95%',
         },
     };

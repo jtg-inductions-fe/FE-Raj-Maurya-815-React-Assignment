@@ -35,13 +35,21 @@ export const Navbar = () => {
     const logoutHandler = () => {
         localStorage.removeItem('userData');
         appStore.dispatch(github.util.resetApiState());
-        void navigate('/login');
+        Promise.resolve(navigate('/login')).catch(() => undefined);
+    };
+    const goTo = (path: string) => () => {
+        Promise.resolve(navigate(path)).catch(() => undefined);
     };
 
     return (
         <StyledNavbar color="transparent" elevation={0} position="sticky">
             <Toolbar sx={{ justifyContent: 'space-between' }}>
-                <Stack flexDirection="row" gap={pxToRem(10)}>
+                <Stack
+                    flexDirection="row"
+                    gap={pxToRem(10)}
+                    onClick={goTo('/')}
+                    sx={{ cursor: 'pointer' }}
+                >
                     <Box
                         component="img"
                         src="/images/brand-logo.webp"
@@ -60,7 +68,7 @@ export const Navbar = () => {
                             fontSize={15}
                             textColor={primary}
                             borderColor={primary}
-                            onClick={() => void navigate('/')}
+                            onClick={goTo('/')}
                         >
                             Search User
                         </CustomButton>
@@ -72,7 +80,7 @@ export const Navbar = () => {
                                 fontSize={15}
                                 textColor={primary}
                                 borderColor={primary}
-                                onClick={() => void navigate('/profile')}
+                                onClick={goTo('/profile')}
                             >
                                 profile
                             </CustomButton>
@@ -94,7 +102,7 @@ export const Navbar = () => {
                                 borderColor={primary}
                                 fontSize={15}
                                 variant="outlined"
-                                onClick={() => void navigate('/login')}
+                                onClick={goTo('/login')}
                             >
                                 login
                             </CustomButton>

@@ -146,6 +146,7 @@ export const UserInfo = ({
                                         Blog-
                                     </Typography>
                                     <StyledInfoLink
+                                        target="_blank"
                                         href={user.blog}
                                         variant="h6"
                                     >
@@ -165,6 +166,7 @@ export const UserInfo = ({
                                         GitHub-
                                     </Typography>
                                     <StyledInfoLink
+                                        target="_blank"
                                         href={user.html_url}
                                         variant="h6"
                                     >
