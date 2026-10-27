@@ -46,7 +46,12 @@ export const SearchBox = ({
     }, []);
 
     return (
-        <Stack direction="row" justifyContent="center" spacing={pxToRem(20)}>
+        <Stack
+            direction="row"
+            justifyContent="center"
+            gap={pxToRem(20)}
+            flexWrap="wrap"
+        >
             <Autocomplete
                 freeSolo
                 disablePortal

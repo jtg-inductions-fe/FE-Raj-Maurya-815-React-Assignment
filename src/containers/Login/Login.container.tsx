@@ -80,14 +80,10 @@ export const LoginContainer = () => {
     }, [isAuthenticated, isLoading, navigate]);
 
     return (
-        <Stack
-            marginTop={pxToRem(250)}
-            justifyContent="center"
-            alignItems="center"
-            height="100%"
-        >
+        <Stack justifyContent="center" alignItems="center" height="90vh">
             <StyledLogin
-                width={pxToRem(500)}
+                width="80%"
+                maxWidth={pxToRem(500)}
                 height={pxToRem(500)}
                 padding={pxToRem(60)}
                 spacing={pxToRem(20)}
